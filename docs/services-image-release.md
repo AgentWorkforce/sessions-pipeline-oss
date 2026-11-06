@@ -41,9 +41,16 @@ The publisher signs two statements for the published digest:
 
 After both attestations succeed, the workflow uploads `release-receipt.json` as
 the `release-receipt` artifact and writes the image/source/workflow/CI identifiers
-to its summary. Download it from the successful publication run:
+to its summary. List publication runs, then inspect the successful run for the
+approved dispatch. Set `publish_run_id` to that run's numeric ID (also shown in
+its Actions URL, `/actions/runs/<id>`) before downloading its receipt:
 
 ```sh
+gh run list --repo AgentWorkforce/sessions-pipeline-oss \
+  --workflow publish-image.yml --event workflow_dispatch \
+  --json databaseId,headSha,status,conclusion,url
+publish_run_id='<reviewed successful publication run ID>'
+gh run view "$publish_run_id" --repo AgentWorkforce/sessions-pipeline-oss
 gh run download "$publish_run_id" --repo AgentWorkforce/sessions-pipeline-oss \
   --name release-receipt
 ```

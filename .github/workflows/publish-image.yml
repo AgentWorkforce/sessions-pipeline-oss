@@ -1,24 +1,22 @@
-# Publishes the 96bulls services image to GHCR by digest.
-# Manual only, and refuses to run unless the dispatcher types the confirmation
-# phrase, because a registry write is a credential action that needs Khaliq's OK.
+# Manual publication of the services image from reviewed public source.
 name: publish-image
 on:
   workflow_dispatch:
     inputs:
       confirm:
-        description: 'Type "publish 96bulls-services" to confirm Khaliq approved this publish'
+        description: 'Type "publish 96bulls-services" to confirm Khaliq approved publication'
         required: true
       ref_note:
-        description: 'Where the approval was given (date, call/message)'
+        description: 'Short public approval reference (single line, no secrets)'
         required: true
       source_sha:
-        description: 'Approved full 40-character public source commit with successful main CI'
+        description: 'Approved full lowercase source SHA on main with successful CI'
         required: true
 permissions:
   contents: read
 jobs:
   preflight:
-    if: ${{ github.ref == 'refs/heads/main' && github.actor == 'khaliqgant' && inputs.confirm == 'publish 96bulls-services' }}
+    if: ${{ github.ref == 'refs/heads/main' && github.actor == 'khaliqgant' && github.triggering_actor == 'khaliqgant' && inputs.confirm == 'publish 96bulls-services' }}
     runs-on: ubuntu-latest
     timeout-minutes: 5
     permissions:
@@ -26,7 +24,6 @@ jobs:
       actions: read
     outputs:
       sha: ${{ steps.source.outputs.sha }}
-      ci_run_id: ${{ steps.source.outputs.ci_run_id }}
       approval_note: ${{ steps.source.outputs.approval_note }}
     steps:
       - uses: actions/checkout@v4
@@ -48,84 +45,106 @@ jobs:
         run: node scripts/check-image-release.mjs
   publish:
     needs: preflight
-    permissions:
-      contents: read
-      packages: write
-      id-token: write
-      attestations: write
-    # Only Khaliq may dispatch it, only from main, and only with the phrase; the job also runs in the
-    # image-publish environment so a protection rule can add a second gate when the plan allows it.
-    if: ${{ needs.preflight.result == 'success' && github.ref == 'refs/heads/main' && github.actor == 'khaliqgant' && inputs.confirm == 'publish 96bulls-services' }}
+    if: ${{ needs.preflight.result == 'success' && github.ref == 'refs/heads/main' && github.actor == 'khaliqgant' && github.triggering_actor == 'khaliqgant' && inputs.confirm == 'publish 96bulls-services' }}
     environment: image-publish
     runs-on: ubuntu-latest
     timeout-minutes: 40
+    permissions:
+      contents: read
+      actions: read
+      packages: write
+      id-token: write
+      attestations: write
     steps:
-      - name: Validate requested source commit
-        env:
-          SOURCE_SHA: ${{ needs.preflight.outputs.sha }}
-        run: |
-          if [[ ! "$SOURCE_SHA" =~ ^[0-9a-f]{40}$ ]]; then
-            echo "Source must be a full lowercase 40-character commit SHA" >&2
-            exit 1
-          fi
+      # Keep the verifier from the trusted workflow commit, not the older image source.
       - uses: actions/checkout@v4
         with:
-          submodules: false
+          ref: ${{ github.sha }}
+          path: .publisher
           persist-credentials: false
-          fetch-depth: 0
+          submodules: false
+      - uses: actions/checkout@v4
+        with:
           ref: ${{ needs.preflight.outputs.sha }}
-      # A customer image must come from a reviewed commit on main.
-      - name: Verify the source commit is reviewed on main
-        id: source
+          path: .source
+          fetch-depth: 0
+          persist-credentials: false
+          submodules: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Recheck source after environment approval
+        working-directory: .source
         env:
+          GH_TOKEN: ${{ github.token }}
           SOURCE_SHA: ${{ needs.preflight.outputs.sha }}
+          CONFIRM: ${{ inputs.confirm }}
+          APPROVAL_NOTE: ${{ needs.preflight.outputs.approval_note }}
         run: |
-          git fetch --no-tags origin main
-          actual="$(git rev-parse HEAD)"
-          if [[ "$actual" != "$SOURCE_SHA" ]]; then
-            echo "Checked out source differs from the requested commit" >&2
-            exit 1
-          fi
-          if ! git merge-base --is-ancestor "$actual" origin/main; then
-            echo "Refusing to publish ${actual}: it is not on main" >&2
-            exit 1
-          fi
-          echo "sha=$actual" >> "$GITHUB_OUTPUT"
-          echo "Reviewed image source: $actual" >> "$GITHUB_STEP_SUMMARY"
+          test "$(git rev-parse HEAD)" = "$SOURCE_SHA"
+          node "$GITHUB_WORKSPACE/.publisher/scripts/check-image-release.mjs"
+      - name: Set isolated registry configuration directory
+        run: |
+          mkdir -p "$RUNNER_TEMP/image-publish-docker"
+          echo "DOCKER_CONFIG=$RUNNER_TEMP/image-publish-docker" >> "$GITHUB_ENV"
+      - name: Install OCI copy tool
+        run: sudo apt-get update && sudo apt-get install --yes skopeo
       - uses: docker/setup-qemu-action@v3
       - uses: docker/setup-buildx-action@v3
+      - name: Build without registry writes (amd64 + arm64)
+        id: build
+        uses: docker/build-push-action@v6
+        with:
+          context: .source
+          file: .source/docker/services.Dockerfile
+          platforms: linux/amd64,linux/arm64
+          push: false
+          outputs: type=oci,dest=${{ runner.temp }}/services.oci.tar
+          tags: ghcr.io/agentworkforce/96bulls-services:sha-${{ needs.preflight.outputs.sha }}
+          labels: |
+            org.opencontainers.image.source=${{ github.server_url }}/${{ github.repository }}
+            org.opencontainers.image.revision=${{ needs.preflight.outputs.sha }}
+            96bulls.approval=${{ needs.preflight.outputs.approval_note }}
+          provenance: mode=max
+          sbom: true
       - uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      - name: Build and push (amd64 + arm64)
-        id: build
-        uses: docker/build-push-action@v6
-        with:
-          context: .
-          file: docker/services.Dockerfile
-          platforms: linux/amd64,linux/arm64
-          push: true
-          # This publisher never moves legacy main/latest tags across source histories.
-          tags: |
-            ghcr.io/agentworkforce/96bulls-services:sha-${{ steps.source.outputs.sha }}
-          labels: |
-            org.opencontainers.image.source=${{ github.server_url }}/${{ github.repository }}
-            org.opencontainers.image.revision=${{ steps.source.outputs.sha }}
-            96bulls.approval=${{ needs.preflight.outputs.approval_note }}
-          # Customer releases need an SBOM and verifiable (max-mode) provenance;
-          # the signed GitHub attestation below covers the pushed digest.
-          provenance: mode=max
-          sbom: true
+      - name: Recheck CI then copy the exact OCI index to its source-SHA tag
+        working-directory: .source
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_SHA: ${{ needs.preflight.outputs.sha }}
+          CONFIRM: ${{ inputs.confirm }}
+          APPROVAL_NOTE: ${{ needs.preflight.outputs.approval_note }}
+          IMAGE_DIGEST: ${{ steps.build.outputs.digest }}
+        run: |
+          node "$GITHUB_WORKSPACE/.publisher/scripts/check-image-release.mjs"
+          [[ "$IMAGE_DIGEST" =~ ^sha256:[0-9a-f]{64}$ ]]
+          skopeo copy --all --preserve-digests --authfile "$DOCKER_CONFIG/config.json" \
+            "oci-archive:$RUNNER_TEMP/services.oci.tar" \
+            "docker://ghcr.io/agentworkforce/96bulls-services:sha-$SOURCE_SHA"
+          skopeo inspect --raw --authfile "$DOCKER_CONFIG/config.json" \
+            "docker://ghcr.io/agentworkforce/96bulls-services:sha-$SOURCE_SHA" > "$RUNNER_TEMP/registry-index.json"
+          actual="sha256:$(sha256sum "$RUNNER_TEMP/registry-index.json" | cut -d ' ' -f 1)"
+          test "$actual" = "$IMAGE_DIGEST"
+      - name: Recheck source CI before signing
+        id: final-source
+        working-directory: .source
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_SHA: ${{ needs.preflight.outputs.sha }}
+          CONFIRM: ${{ inputs.confirm }}
+          APPROVAL_NOTE: ${{ needs.preflight.outputs.approval_note }}
+        run: node "$GITHUB_WORKSPACE/.publisher/scripts/check-image-release.mjs"
       - name: Attest published image
         uses: actions/attest-build-provenance@v2
         with:
           subject-name: ghcr.io/agentworkforce/96bulls-services
           subject-digest: ${{ steps.build.outputs.digest }}
           push-to-registry: true
-      # GitHub provenance identifies the workflow commit. Also bind the actual
-      # reviewed checkout when publication deliberately uses an older source.
       - name: Attest reviewed image source
         uses: actions/attest@ce27ba3b4a9a139d9a20a4a07d69fabb52f1e5bc # v2.4.0
         with:
@@ -135,12 +154,33 @@ jobs:
           predicate: >-
             {
               "repository": "${{ github.server_url }}/${{ github.repository }}",
-              "source_sha": "${{ steps.source.outputs.sha }}",
+              "source_sha": "${{ needs.preflight.outputs.sha }}",
               "workflow_sha": "${{ github.sha }}",
               "source_ref": "refs/heads/main",
-              "ci_run_id": "${{ needs.preflight.outputs.ci_run_id }}"
+              "ci_run_id": "${{ steps.final-source.outputs.ci_run_id }}"
             }
           push-to-registry: true
-      - name: Digest
+      - name: Record signed release receipt
+        env:
+          SOURCE_SHA: ${{ needs.preflight.outputs.sha }}
+          WORKFLOW_SHA: ${{ github.sha }}
+          IMAGE_DIGEST: ${{ steps.build.outputs.digest }}
+          SOURCE_CI_RUN: ${{ steps.final-source.outputs.ci_run_id }}
         run: |
-          echo "ghcr.io/agentworkforce/96bulls-services@${{ steps.build.outputs.digest }}" | tee -a "$GITHUB_STEP_SUMMARY"
+          node --input-type=module <<'JS'
+          import { writeFileSync, appendFileSync } from 'node:fs';
+          const e = process.env;
+          if (!/^[0-9a-f]{40}$/.test(e.SOURCE_SHA) || !/^[0-9a-f]{40}$/.test(e.WORKFLOW_SHA) ||
+              !/^sha256:[0-9a-f]{64}$/.test(e.IMAGE_DIGEST) || !/^[1-9][0-9]*$/.test(e.SOURCE_CI_RUN)) throw Error('Invalid receipt fields');
+          const receipt = { repository: 'https://github.com/AgentWorkforce/sessions-pipeline-oss',
+            image: `ghcr.io/agentworkforce/96bulls-services@${e.IMAGE_DIGEST}`,
+            source_sha: e.SOURCE_SHA, workflow_sha: e.WORKFLOW_SHA, source_ref: 'refs/heads/main',
+            ci_run_id: e.SOURCE_CI_RUN, publish_run_id: e.GITHUB_RUN_ID, publish_run_attempt: e.GITHUB_RUN_ATTEMPT };
+          writeFileSync(`${e.RUNNER_TEMP}/release-receipt.json`, JSON.stringify(receipt, null, 2) + '\n');
+          appendFileSync(e.GITHUB_STEP_SUMMARY, `Signed image: ${receipt.image}\nSource: ${receipt.source_sha}\nWorkflow: ${receipt.workflow_sha}\nSource CI: ${receipt.ci_run_id}\n`);
+          JS
+      - uses: actions/upload-artifact@v4
+        with:
+          name: release-receipt
+          path: ${{ runner.temp }}/release-receipt.json
+          if-no-files-found: error

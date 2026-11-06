@@ -1,9 +1,9 @@
 # Releasing the services image
 
 Use the manual `publish-image` workflow after the operator approves the source
-commit and publication. The workflow still requires Khaliq's GitHub identity,
-the `main` workflow ref, the confirmation phrase and the `image-publish`
-environment. Approval to merge code does not authorize publication.
+commit and publication. Both the original dispatcher and any rerun initiator
+must be Khaliq. The workflow also requires the `main` ref, the confirmation
+phrase and the `image-publish` environment. Approval to merge code does not authorize publication.
 
 Set `source_sha` to the approved full lowercase public commit SHA. It must
 belong to current `main`, and its latest official main/push CI run and every job
@@ -23,8 +23,14 @@ pull access authorizes a workflow to push. A denied publish is a permission
 failure to resolve with the package owner, not a reason to use another token or
 disable release gates.
 
-The workflow builds amd64 and arm64 images, generates an SBOM and max-mode
-BuildKit provenance, and signs two statements for the published digest:
+After environment approval, the publisher rechecks CI and builds amd64/arm64
+into a local OCI archive with SBOM and max-mode BuildKit provenance. It rechecks
+CI immediately before copying that exact index with Skopeo, verifies the registry
+digest, and rechecks CI again before signing. A newer CI run or attempt found
+during validation is refused. These are point-in-time checks, not an atomic lock
+on future CI activity.
+
+The publisher signs two statements for the published digest:
 
 - GitHub build provenance identifies the workflow and its commit.
 - `https://agentrelay.com/attestations/reviewed-image-source/v1` records the
@@ -33,11 +39,25 @@ BuildKit provenance, and signs two statements for the published digest:
 
 ## Verify a release
 
-Obtain `image` (including its `sha256:` digest), `source_sha` and `workflow_sha`
-from the reviewed release receipt. Verify both the trusted workflow identity
-and the source statement before promoting the image:
+After both attestations succeed, the workflow uploads `release-receipt.json` as
+the `release-receipt` artifact and writes the image/source/workflow/CI identifiers
+to its summary. Download it from the successful publication run:
+
+```sh
+gh run download "$publish_run_id" --repo AgentWorkforce/sessions-pipeline-oss \
+  --name release-receipt
+```
+
+Review the receipt's `image` digest, `source_sha`, `workflow_sha`, `ci_run_id` and
+publication run identity against the approved source and the run's actual
+`head_sha`. Set `image`, `source_sha`, `workflow_sha` and `ci_run_id` from those reviewed
+values. The registry must be accessible to the OCI client used by `gh`.
+
+Verify both trusted statements before promoting the image. Run this block as
+one Bash script so any failed verification stops the process:
 
 ```bash
+set -euo pipefail
 gh attestation verify "oci://$image" \
   --repo AgentWorkforce/sessions-pipeline-oss \
   --signer-workflow AgentWorkforce/sessions-pipeline-oss/.github/workflows/publish-image.yml \
@@ -50,11 +70,11 @@ gh attestation verify "oci://$image" \
   --predicate-type https://agentrelay.com/attestations/reviewed-image-source/v1 \
   --format json > source-verification.json
 
-jq -e --arg source "$source_sha" --arg workflow "$workflow_sha" '
+jq -e --arg source "$source_sha" --arg workflow "$workflow_sha" --arg ci "$ci_run_id" '
   any(.[]; .verificationResult.statement.predicate |
     .repository == "https://github.com/AgentWorkforce/sessions-pipeline-oss" and
     .source_ref == "refs/heads/main" and
-    .source_sha == $source and .workflow_sha == $workflow)
+    .source_sha == $source and .workflow_sha == $workflow and .ci_run_id == $ci)
 ' source-verification.json
 ```
 

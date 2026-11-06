@@ -10,7 +10,7 @@ export function validateRequest(env) {
   if (env.GITHUB_REPOSITORY !== REPOSITORY ||
       env.GITHUB_EVENT_NAME !== "workflow_dispatch" ||
       env.GITHUB_REF !== "refs/heads/main" ||
-      env.GITHUB_ACTOR !== "khaliqgant" ||
+      env.GITHUB_ACTOR !== "khaliqgant" || env.GITHUB_TRIGGERING_ACTOR !== "khaliqgant" ||
       env.GITHUB_WORKFLOW_REF !== `${REPOSITORY}/.github/workflows/publish-image.yml@refs/heads/main` ||
       env.CONFIRM !== "publish 96bulls-services") refuse("dispatcher or workflow identity");
   if (typeof env.SOURCE_SHA !== "string" || !SHA.test(env.SOURCE_SHA) ||
@@ -23,8 +23,9 @@ export function validateRequest(env) {
 
 export function verifyAncestry(sourceSha, run = execFileSync) {
   if (!SHA.test(sourceSha)) refuse("full source SHA required");
+  try { run("git", ["fetch", "--no-tags", "origin", "main"], { stdio: "pipe" }); }
+  catch { refuse("cannot fetch current main"); }
   try {
-    run("git", ["fetch", "--no-tags", "origin", "main"], { stdio: "pipe" });
     run("git", ["cat-file", "-e", `${sourceSha}^{commit}`], { stdio: "pipe" });
     run("git", ["merge-base", "--is-ancestor", sourceSha, "origin/main"], { stdio: "pipe" });
   } catch { refuse("source is not a commit on current main"); }
@@ -33,7 +34,8 @@ export function verifyAncestry(sourceSha, run = execFileSync) {
 export async function verifySourceCI(sourceSha, getJSON) {
   if (!SHA.test(sourceSha)) refuse("full source SHA required");
   const base = `/repos/${REPOSITORY}/actions`;
-  const response = await getJSON(`${base}/workflows/ci.yml/runs?head_sha=${sourceSha}&event=push&branch=main&per_page=100`);
+  const runsPath = `${base}/workflows/ci.yml/runs?head_sha=${sourceSha}&event=push&branch=main&per_page=100`;
+  const response = await getJSON(runsPath);
   if (!Array.isArray(response.workflow_runs)) refuse("missing source CI metadata");
   // Never fall back to an older green run when the newest matching run is red or pending.
   const matching = response.workflow_runs.filter(run => run.head_sha === sourceSha &&
@@ -48,6 +50,15 @@ export async function verifySourceCI(sourceSha, getJSON) {
   if (!Array.isArray(jobs.jobs) || jobs.total_count !== jobs.jobs.length || !jobs.jobs.length ||
       !jobs.jobs.every(job => job.head_sha === sourceSha && job.status === "completed" && job.conclusion === "success") ||
       !jobs.jobs.some(job => job.name === "checks")) refuse("source CI jobs are incomplete or unsuccessful");
+  const refreshed = await getJSON(runsPath);
+  if (!Array.isArray(refreshed.workflow_runs)) refuse("source CI changed during validation");
+  const refreshedMatching = refreshed.workflow_runs.filter(run => run.head_sha === sourceSha &&
+    run.head_branch === "main" && run.event === "push" && run.repository?.full_name === REPOSITORY &&
+    run.head_repository?.full_name === REPOSITORY);
+  if (!refreshedMatching.length || refreshedMatching.some(run => !Number.isSafeInteger(run.id) || run.id <= 0)) refuse("source CI changed during validation");
+  const newest = refreshedMatching.reduce((a, b) => a.id > b.id ? a : b);
+  if (newest.id !== latest.id || newest.run_attempt !== latest.run_attempt ||
+      newest.status !== "completed" || newest.conclusion !== "success") refuse("source CI changed during validation");
   const current = await getJSON(`${base}/runs/${latest.id}`);
   if (current.head_sha !== sourceSha || current.run_attempt !== latest.run_attempt ||
       current.status !== "completed" || current.conclusion !== "success") refuse("source CI changed during validation");

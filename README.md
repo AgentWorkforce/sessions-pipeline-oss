@@ -1,3 +1,8 @@
+> This source export is superseded. The canonical engine repository is
+> [AgentWorkforce/sessions-pipeline](https://github.com/AgentWorkforce/sessions-pipeline),
+> where public-release preparation is in progress. No supported image release
+> is issued from this export.
+
 # Agent Relay Sessions Pipeline
 
 Portable services for ingesting, scrubbing, storing, indexing and processing AI coding session history. Licensed under Apache-2.0.

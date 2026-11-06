@@ -139,7 +139,7 @@ describe("GET /v1/sessions from the directory", () => {
     expect(parseDirectoryWorkspaces(undefined)).toEqual(new Set());
     expect(parseDirectoryWorkspaces("  ")).toEqual(new Set());
     expect(parseDirectoryWorkspaces("*")).toBe("*");
-    expect(parseDirectoryWorkspaces(" 1220c1dc-0ce5-45fe-8b67-e7bb57a2db63 , ws-b,")).toEqual(new Set(["1220c1dc-0ce5-45fe-8b67-e7bb57a2db63", "ws-b"]));
+    expect(parseDirectoryWorkspaces(" 20000000-0000-4000-8000-000000000002 , ws-b,")).toEqual(new Set(["20000000-0000-4000-8000-000000000002", "ws-b"]));
   });
 
   test("until the migration exists: 501 directory_not_migrated, never an empty page", async () => {

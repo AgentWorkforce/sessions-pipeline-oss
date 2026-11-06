@@ -3,7 +3,7 @@ import { canonicalProjectPublisherConfig } from "../deployment.ts";
 import { canonicalProjectPublisherSettings } from "../settings.ts";
 import worker from "../worker.ts";
 const input = { hyperdriveId: "a".repeat(32), schemaGeneration: "e".repeat(64), queueName: "relayhistory-canonical-project-events",
-  scope: { orgId: "c4fae7b9-43a9-44e8-94d5-455aa579d67b", workspaceId: "1220c1dc-0ce5-45fe-8b67-e7bb57a2db63" } };
+  scope: { orgId: "10000000-0000-4000-8000-000000000001", workspaceId: "20000000-0000-4000-8000-000000000002" } };
 test("rendered publisher is private, default off, and uses only external bindings", async () => {
   const config = canonicalProjectPublisherConfig(input);
   expect(config.workers_dev).toBe(false);

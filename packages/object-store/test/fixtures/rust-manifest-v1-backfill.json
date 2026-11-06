@@ -1,0 +1,121 @@
+{
+  "key": "v1/ws=ws_1/m=mach-1/h=claude/d=2026/10/25/s=s-backfill/manifest.json",
+  "manifest": {
+    "schema_v": 1,
+    "layout": "v1",
+    "trace_id": "019a1f3c-8e2b-7c41-9d3a-5b6f0e2a7c18",
+    "revision": 4,
+    "created_at": "2026-10-30T21:07:09.269Z",
+    "updated_at": "2026-10-30T21:07:09.269Z",
+    "session": {
+      "workspace_id": "ws_1",
+      "machine_id": "mach-1",
+      "harness": "claude",
+      "session_id": "s-backfill",
+      "started_at": "2026-10-25T18:01:58.000Z"
+    },
+    "writer": {
+      "delivery_instance_id": "dest_objstore_01",
+      "plugin_version": "test"
+    },
+    "raw": {
+      "owner": "dest_objstore_01",
+      "state": "open",
+      "updated_at": "2026-10-30T21:07:09.270Z",
+      "format": "ndjson",
+      "compression": "zstd",
+      "chunk_count": 4,
+      "raw_bytes": 660,
+      "stored_bytes": 222,
+      "content_sha256": "796a14cf979d68529e1cd3c9b2c02aa27a73d1054df5c5f035b755a86edc1ec4",
+      "epoch": 2,
+      "epochs": [
+        {
+          "epoch": 0,
+          "opened_at": "2026-10-30T21:07:09.269Z",
+          "reason": "initial",
+          "first_seq": 0,
+          "opened_by": "dest_objstore_01"
+        },
+        {
+          "epoch": 1,
+          "opened_at": "2026-10-30T00:00:00.000Z",
+          "reason": "backfill",
+          "first_seq": 2,
+          "opened_by": "migration:mgr_export"
+        },
+        {
+          "epoch": 2,
+          "opened_at": "2026-10-30T21:07:09.270Z",
+          "reason": "resumed",
+          "first_seq": 3,
+          "opened_by": "dest_objstore_01",
+          "resumes_epoch": 0
+        }
+      ],
+      "next_offset": 160,
+      "chunks": [
+        {
+          "seq": 0,
+          "epoch": 0,
+          "start_offset": 0,
+          "bytes": 100,
+          "stored_bytes": 34,
+          "sha256": "b18efa847f7a3fa48fe0aafd4a6250aa5129740e05126859377af20cedafdeee",
+          "sha256_8": "b18efa84",
+          "stored_sha256": "bd84a7972f11bec61e7870103305ae674f9823b8c373d01f171377761e3766fc",
+          "stored_raw_bytes": 100,
+          "raw_sha256": "3e288a3ded5e40925e4db89c1a289fc96c616f6964e974d072a919a943f43348",
+          "compression": "zstd",
+          "records": 1
+        },
+        {
+          "seq": 1,
+          "epoch": 0,
+          "start_offset": 100,
+          "bytes": 50,
+          "stored_bytes": 17,
+          "sha256": "2725aea2d2dea736fbe38e41ecb518f6098cb68ac77362c5e34faafb356567c5",
+          "sha256_8": "2725aea2",
+          "stored_sha256": "2a3858bab4d2b779d41ce6a92509a1c37746b9d3636f6dbc1a06b944f6b8f295",
+          "stored_raw_bytes": 50,
+          "raw_sha256": "b712a7cb39845853a8b1de32698cb3b0e3ab846058ef11bc968e359bd8f0c7e5",
+          "compression": "zstd",
+          "records": 1
+        },
+        {
+          "seq": 2,
+          "epoch": 1,
+          "start_offset": 0,
+          "bytes": 500,
+          "stored_bytes": 167,
+          "sha256": "50e65793dec88b5c5101373b6aaa2dacbe7784f7209a3218a7fd8e00d668de8f",
+          "sha256_8": "50e65793",
+          "stored_sha256": "f9556ffdc32b22eedd932164a543956b11f6c711e3fc48f43a8cc86c7ff56048",
+          "stored_raw_bytes": 500,
+          "raw_sha256": "c581b6a5a7908e06f12fec2e27671ba7a5e3dcfedb130bb65818d495c7a403b4",
+          "compression": "zstd",
+          "records": 1
+        },
+        {
+          "seq": 3,
+          "epoch": 2,
+          "start_offset": 150,
+          "bytes": 10,
+          "stored_bytes": 4,
+          "sha256": "b6f3c15844fe12f966ad90db59da8332a9a6d9dfd198ac83949be2045ec6dc1e",
+          "sha256_8": "b6f3c158",
+          "stored_sha256": "d274b028071fb043b9c265e8d8e7b69485b20b9f7960921a95078b4bd53fa200",
+          "stored_raw_bytes": 10,
+          "raw_sha256": "93e9b3fecc9f6cda3b3b1fdf8db7c00cf2b5fed7ae5027a831f334ea7326bd78",
+          "compression": "zstd",
+          "records": 1
+        }
+      ],
+      "scrub": {
+        "ruleset": "relayhistory-scrub",
+        "version": 2
+      }
+    }
+  }
+}

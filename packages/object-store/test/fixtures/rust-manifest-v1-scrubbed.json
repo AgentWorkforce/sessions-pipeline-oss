@@ -1,0 +1,79 @@
+{
+  "_comment": "Produced by relayhistory #551 (Rust manifest::client helpers, record_scrub before apply_chunks) for the cross-language check. Do not regenerate from TS.",
+  "key": "v1/ws=ws_1/m=mach-1/h=claude/d=2026/10/25/s=s-scrub-interop/manifest.json",
+  "manifest": {
+    "created_at": "2026-10-26T02:08:07.323Z",
+    "layout": "v1",
+    "raw": {
+      "chunk_count": 2,
+      "chunks": [
+        {
+          "bytes": 10,
+          "compression": "zstd",
+          "epoch": 0,
+          "raw_sha256": "3e288a3ded5e40925e4db89c1a289fc96c616f6964e974d072a919a943f43348",
+          "records": 1,
+          "seq": 0,
+          "sha256": "b18efa847f7a3fa48fe0aafd4a6250aa5129740e05126859377af20cedafdeee",
+          "sha256_8": "b18efa84",
+          "start_offset": 0,
+          "stored_bytes": 4,
+          "stored_raw_bytes": 10,
+          "stored_sha256": "bd84a7972f11bec61e7870103305ae674f9823b8c373d01f171377761e3766fc"
+        },
+        {
+          "bytes": 7,
+          "compression": "zstd",
+          "epoch": 0,
+          "raw_sha256": "b712a7cb39845853a8b1de32698cb3b0e3ab846058ef11bc968e359bd8f0c7e5",
+          "records": 1,
+          "seq": 1,
+          "sha256": "2725aea2d2dea736fbe38e41ecb518f6098cb68ac77362c5e34faafb356567c5",
+          "sha256_8": "2725aea2",
+          "start_offset": 10,
+          "stored_bytes": 3,
+          "stored_raw_bytes": 7,
+          "stored_sha256": "2a3858bab4d2b779d41ce6a92509a1c37746b9d3636f6dbc1a06b944f6b8f295"
+        }
+      ],
+      "compression": "zstd",
+      "content_sha256": "a97482a47131f0a1a196ee3fbfb1eeee7bef52f48d7c9c52a91772049da67e86",
+      "epoch": 0,
+      "epochs": [
+        {
+          "epoch": 0,
+          "first_seq": 0,
+          "opened_at": "2026-10-26T02:08:07.323Z",
+          "opened_by": "dest_objstore_01",
+          "reason": "initial"
+        }
+      ],
+      "format": "jsonl",
+      "next_offset": 17,
+      "owner": "dest_objstore_01",
+      "raw_bytes": 17,
+      "scrub": {
+        "ruleset": "relayhistory-scrub",
+        "version": 1
+      },
+      "state": "open",
+      "stored_bytes": 7,
+      "updated_at": "2026-10-26T02:08:07.323Z"
+    },
+    "revision": 2,
+    "schema_v": 1,
+    "session": {
+      "harness": "claude",
+      "machine_id": "mach-1",
+      "session_id": "s-scrub-interop",
+      "started_at": "2026-10-25T18:01:58.000Z",
+      "workspace_id": "ws_1"
+    },
+    "trace_id": "019a1f3c-8e2b-7c41-9d3a-5b6f0e2a7c18",
+    "updated_at": "2026-10-26T02:08:07.323Z",
+    "writer": {
+      "delivery_instance_id": "dest_objstore_01",
+      "plugin_version": "test"
+    }
+  }
+}

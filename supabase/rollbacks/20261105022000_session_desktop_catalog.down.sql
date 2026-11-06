@@ -1,0 +1,4 @@
+DROP FUNCTION sessions.session_directory_desktop_catalog(text,text,text);
+DROP INDEX sessions.session_directory_catalog_read_pending_idx;
+ALTER TABLE sessions.session_directory_relationships DROP COLUMN child_model,DROP COLUMN child_agent_name,DROP COLUMN child_agent_type;
+ALTER TABLE sessions.session_directory DROP COLUMN catalog_read_version,DROP COLUMN catalog_read_epoch,DROP COLUMN catalog_read_projected_at,DROP COLUMN catalog_models_complete,DROP COLUMN catalog_relationships_complete;

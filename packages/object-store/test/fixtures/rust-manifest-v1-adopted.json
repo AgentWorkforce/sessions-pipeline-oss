@@ -1,0 +1,86 @@
+{
+  "key": "v1/ws=ws_1/m=mach-1/h=claude/d=2026/10/25/s=s-adopted/manifest.json",
+  "manifest": {
+    "schema_v": 1,
+    "layout": "v1",
+    "trace_id": "019a1f3c-8e2b-7c41-9d3a-5b6f0e2a7c18",
+    "revision": 3,
+    "created_at": "2026-10-30T22:10:04.263Z",
+    "updated_at": "2026-10-30T22:10:04.263Z",
+    "session": {
+      "workspace_id": "ws_1",
+      "machine_id": "mach-1",
+      "harness": "claude",
+      "session_id": "s-adopted",
+      "started_at": "2026-10-25T18:01:58.000Z"
+    },
+    "writer": {
+      "delivery_instance_id": "dest_objstore_01",
+      "plugin_version": "test",
+      "capabilities": ["manifest-epochs-v2"]
+    },
+    "raw": {
+      "owner": "dest_objstore_01",
+      "state": "open",
+      "updated_at": "2026-10-30T22:10:04.264Z",
+      "format": "ndjson",
+      "compression": "zstd",
+      "chunk_count": 2,
+      "raw_bytes": 150,
+      "stored_bytes": 51,
+      "content_sha256": "0d24239d1b4d38dad7497e7e822d63af4c3869e99082acef2b8dbe1d54961889",
+      "epoch": 1,
+      "epochs": [
+        {
+          "epoch": 0,
+          "opened_at": "2026-10-30T22:10:04.263Z",
+          "reason": "initial",
+          "first_seq": 0,
+          "opened_by": "migration:mgr_export"
+        },
+        {
+          "epoch": 1,
+          "opened_at": "2026-10-30T22:10:04.264Z",
+          "reason": "adopted",
+          "first_seq": 1,
+          "opened_by": "dest_objstore_01"
+        }
+      ],
+      "next_offset": 50,
+      "chunks": [
+        {
+          "seq": 0,
+          "epoch": 0,
+          "start_offset": 0,
+          "bytes": 100,
+          "stored_bytes": 34,
+          "sha256": "b18efa847f7a3fa48fe0aafd4a6250aa5129740e05126859377af20cedafdeee",
+          "sha256_8": "b18efa84",
+          "stored_sha256": "bd84a7972f11bec61e7870103305ae674f9823b8c373d01f171377761e3766fc",
+          "stored_raw_bytes": 100,
+          "raw_sha256": "3e288a3ded5e40925e4db89c1a289fc96c616f6964e974d072a919a943f43348",
+          "compression": "zstd",
+          "records": 1
+        },
+        {
+          "seq": 1,
+          "epoch": 1,
+          "start_offset": 0,
+          "bytes": 50,
+          "stored_bytes": 17,
+          "sha256": "2725aea2d2dea736fbe38e41ecb518f6098cb68ac77362c5e34faafb356567c5",
+          "sha256_8": "2725aea2",
+          "stored_sha256": "2a3858bab4d2b779d41ce6a92509a1c37746b9d3636f6dbc1a06b944f6b8f295",
+          "stored_raw_bytes": 50,
+          "raw_sha256": "b712a7cb39845853a8b1de32698cb3b0e3ab846058ef11bc968e359bd8f0c7e5",
+          "compression": "zstd",
+          "records": 1
+        }
+      ],
+      "scrub": {
+        "ruleset": "relayhistory-scrub",
+        "version": 2
+      }
+    }
+  }
+}

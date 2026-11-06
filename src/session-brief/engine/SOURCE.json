@@ -1,0 +1,46 @@
+{
+  "repository": "https://github.com/AgentWorkforce/relayhistory-cloud",
+  "commit": "634fb4b294ae9f88e4d046e055a9d95b14a87f72",
+  "path": "packages/relayhistory/src/lib/session-analysis",
+  "upstream_provenance": "engine/PROVENANCE.md there: ported from AgentWorkforce/skip 07a16203 (+ local summary improvements)",
+  "summary_prompt_sha256": "2407689ddf4445df9a01e0f965ee65890f47020ea461e1bc7bdbe08d01c16614",
+  "note": "Change upstream first; re-vendor and update the hashes in the same change. src/session-brief/__tests__/engine-provenance.test.ts checks the local hashes and the prompt hash.",
+  "files": {
+    "summary-contract.ts": {
+      "upstream": "engine/summary-contract.ts",
+      "upstream_sha256": "2d37429c3fddb1bc8114ed07fc62ade8f6d3ad103522ecc2f33a0c54ff961718",
+      "sha256": "2d37429c3fddb1bc8114ed07fc62ade8f6d3ad103522ecc2f33a0c54ff961718",
+      "adaptation": "verbatim"
+    },
+    "summary-prompt.ts": {
+      "upstream": "engine/summary-prompt.ts",
+      "upstream_sha256": "e1f329e5224c2bb5b044688626d1000acd9211f817a6a487907912c2bdd2bd60",
+      "sha256": "e1f329e5224c2bb5b044688626d1000acd9211f817a6a487907912c2bdd2bd60",
+      "adaptation": "verbatim"
+    },
+    "summary-input.ts": {
+      "upstream": "engine/summary-input.ts",
+      "upstream_sha256": "4c663a5512c8db22ce0906e367aa6d01b42a3d9f6984e9696c9532c37c9eeb55",
+      "sha256": "3ac51402e512e0a8d8270f06e14fe06089aa38ec63fdf0e9cbec4e0e5465c79e",
+      "adaptation": "import specifiers only (.ts extensions)"
+    },
+    "normalized-history.ts": {
+      "upstream": "engine/normalized-history.ts",
+      "upstream_sha256": "87ae1deea726427d16756b3a7a6d1f6cf324bd0b6bddbc5ac245601caa98b5db",
+      "sha256": "87ae1deea726427d16756b3a7a6d1f6cf324bd0b6bddbc5ac245601caa98b5db",
+      "adaptation": "verbatim"
+    },
+    "model.ts": {
+      "upstream": "engine/model.ts",
+      "upstream_sha256": "81053457b793c84b6ea8450b2d1191f36b36aee3f8ccf9070d1f571bd0f0466f",
+      "sha256": "3ff50d98f7a3709082e686422b3725d4b7ae879da12fef1ee2a907166d5ac110",
+      "adaptation": "subset: ModelTransport types and summarizeSessionInput, byte-identical; analyzeSessionInput (full analysis) omitted"
+    },
+    "transport.ts": {
+      "upstream": "transport.ts",
+      "upstream_sha256": "b9db859a2ca0e5fe1fc09be5b0910dbcfd8d16b6c3e254ab6ae1ab3f7e943e87",
+      "sha256": "6475c02d8df92302ee167b5aa85c75c9cce359aa86b9470a65139a6f55c9898d",
+      "adaptation": "import specifier only (./model.ts)"
+    }
+  }
+}

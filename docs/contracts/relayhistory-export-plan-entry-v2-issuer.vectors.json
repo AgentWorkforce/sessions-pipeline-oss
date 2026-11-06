@@ -1,0 +1,256 @@
+{
+  "contract": "relayhistory-export-plan-entry-v2-issuer",
+  "note": "Synthetic ids only. Issuer-side vectors for plan entry v2: the legacy conditional (absent and empty backfills give exactly the v1 stored plan and digest), the v2 plan, the base-read capability's meta.read and the v2 commit meta.upload. Entries and the base are those of relayhistory-export-plan-entry-v1/v2.vectors.json.",
+  "grant_id": "mgr_00000000000000000000000000000000",
+  "exported_at": "2026-10-30T00:00:00.000Z",
+  "legacy": {
+    "absent": {
+      "input": {
+        "exported_at": "2026-10-30T00:00:00.000Z",
+        "manifests": [
+          {
+            "key": "v1/ws=ws_synthetic/m=machine-a/h=claude/d=2026/10/25/s=session-a/manifest.json",
+            "org_id": "org_synthetic",
+            "workspace_id": "ws_synthetic",
+            "source_user_id": "user_synthetic_a",
+            "session": {
+              "machine_id": "machine-a",
+              "harness": "claude",
+              "session_id": "session-a",
+              "started_at": "2026-10-25T18:01:58.000Z"
+            },
+            "state": "closed",
+            "chunks": [
+              {
+                "seq": 0,
+                "epoch": 0,
+                "start_offset": 0,
+                "bytes": 4194000,
+                "sha256": "bc94be8d405bbe519e9d806b1ae895b0a07e95f57f2492d312175a588eaeab1c",
+                "records": 900
+              },
+              {
+                "seq": 1,
+                "epoch": 0,
+                "start_offset": 4194000,
+                "bytes": 1234,
+                "sha256": "aeba0a6a51348457def7e70f1a6766d7b655d3e0461f98b7d09d47afd6f1cb82",
+                "records": 3
+              }
+            ]
+          },
+          {
+            "key": "v1/ws=ws_synthetic/m=unknown-origin-42/h=codex/d=2026/01/02/s=019a1f3c-8e2b-7c41-9d3a-5b6f0e2a7c18/manifest.json",
+            "org_id": "org_synthetic",
+            "workspace_id": "ws_synthetic",
+            "source_user_id": "user_synthetic_b",
+            "session": {
+              "machine_id": "unknown-origin-42",
+              "harness": "codex",
+              "session_id": "019a1f3c-8e2b-7c41-9d3a-5b6f0e2a7c18",
+              "started_at": "2026-01-02T00:00:00.000Z"
+            },
+            "state": "open",
+            "chunks": [
+              {
+                "seq": 0,
+                "epoch": 0,
+                "start_offset": 0,
+                "bytes": 512,
+                "sha256": "5c294de0de9d05e67c33daec1a2d80576fe47253586e1641ddbf598083d4968e",
+                "records": 1
+              }
+            ]
+          }
+        ]
+      },
+      "stored_plan_canonical_json": "{\"exported_at\":\"2026-10-30T00:00:00.000Z\",\"grant_id\":\"mgr_00000000000000000000000000000000\",\"manifests\":[{\"chunks\":[{\"bytes\":4194000,\"epoch\":0,\"records\":900,\"seq\":0,\"sha256\":\"bc94be8d405bbe519e9d806b1ae895b0a07e95f57f2492d312175a588eaeab1c\",\"start_offset\":0},{\"bytes\":1234,\"epoch\":0,\"records\":3,\"seq\":1,\"sha256\":\"aeba0a6a51348457def7e70f1a6766d7b655d3e0461f98b7d09d47afd6f1cb82\",\"start_offset\":4194000}],\"content_sha256\":\"ae06338e9635e6940349cd3996467a103f166db6ee2005151a7512da8c9417c4\",\"grant_id\":\"mgr_00000000000000000000000000000000\",\"key\":\"v1/ws=ws_synthetic/m=machine-a/h=claude/d=2026/10/25/s=session-a/manifest.json\",\"org_id\":\"org_synthetic\",\"raw_bytes\":4195234,\"session\":{\"harness\":\"claude\",\"machine_id\":\"machine-a\",\"session_id\":\"session-a\",\"started_at\":\"2026-10-25T18:01:58.000Z\"},\"source_user_id\":\"user_synthetic_a\",\"state\":\"closed\",\"workspace_id\":\"ws_synthetic\"},{\"chunks\":[{\"bytes\":512,\"epoch\":0,\"records\":1,\"seq\":0,\"sha256\":\"5c294de0de9d05e67c33daec1a2d80576fe47253586e1641ddbf598083d4968e\",\"start_offset\":0}],\"content_sha256\":\"972b971dab6ee818f3a033fd9d039fb1d7c2fefcc1dc219c246ff8efe3ae86a0\",\"grant_id\":\"mgr_00000000000000000000000000000000\",\"key\":\"v1/ws=ws_synthetic/m=unknown-origin-42/h=codex/d=2026/01/02/s=019a1f3c-8e2b-7c41-9d3a-5b6f0e2a7c18/manifest.json\",\"org_id\":\"org_synthetic\",\"raw_bytes\":512,\"session\":{\"harness\":\"codex\",\"machine_id\":\"unknown-origin-42\",\"session_id\":\"019a1f3c-8e2b-7c41-9d3a-5b6f0e2a7c18\",\"started_at\":\"2026-01-02T00:00:00.000Z\"},\"source_user_id\":\"user_synthetic_b\",\"state\":\"open\",\"workspace_id\":\"ws_synthetic\"}],\"v\":1}",
+      "plan_digest": "a6682d4deeb479a42d8abf4c0dae89ddf39744916a0d4148bdb40ec702c20df1"
+    },
+    "empty": {
+      "input": {
+        "exported_at": "2026-10-30T00:00:00.000Z",
+        "manifests": [
+          {
+            "key": "v1/ws=ws_synthetic/m=machine-a/h=claude/d=2026/10/25/s=session-a/manifest.json",
+            "org_id": "org_synthetic",
+            "workspace_id": "ws_synthetic",
+            "source_user_id": "user_synthetic_a",
+            "session": {
+              "machine_id": "machine-a",
+              "harness": "claude",
+              "session_id": "session-a",
+              "started_at": "2026-10-25T18:01:58.000Z"
+            },
+            "state": "closed",
+            "chunks": [
+              {
+                "seq": 0,
+                "epoch": 0,
+                "start_offset": 0,
+                "bytes": 4194000,
+                "sha256": "bc94be8d405bbe519e9d806b1ae895b0a07e95f57f2492d312175a588eaeab1c",
+                "records": 900
+              },
+              {
+                "seq": 1,
+                "epoch": 0,
+                "start_offset": 4194000,
+                "bytes": 1234,
+                "sha256": "aeba0a6a51348457def7e70f1a6766d7b655d3e0461f98b7d09d47afd6f1cb82",
+                "records": 3
+              }
+            ]
+          },
+          {
+            "key": "v1/ws=ws_synthetic/m=unknown-origin-42/h=codex/d=2026/01/02/s=019a1f3c-8e2b-7c41-9d3a-5b6f0e2a7c18/manifest.json",
+            "org_id": "org_synthetic",
+            "workspace_id": "ws_synthetic",
+            "source_user_id": "user_synthetic_b",
+            "session": {
+              "machine_id": "unknown-origin-42",
+              "harness": "codex",
+              "session_id": "019a1f3c-8e2b-7c41-9d3a-5b6f0e2a7c18",
+              "started_at": "2026-01-02T00:00:00.000Z"
+            },
+            "state": "open",
+            "chunks": [
+              {
+                "seq": 0,
+                "epoch": 0,
+                "start_offset": 0,
+                "bytes": 512,
+                "sha256": "5c294de0de9d05e67c33daec1a2d80576fe47253586e1641ddbf598083d4968e",
+                "records": 1
+              }
+            ]
+          }
+        ],
+        "backfills": []
+      },
+      "stored_plan_canonical_json": "{\"exported_at\":\"2026-10-30T00:00:00.000Z\",\"grant_id\":\"mgr_00000000000000000000000000000000\",\"manifests\":[{\"chunks\":[{\"bytes\":4194000,\"epoch\":0,\"records\":900,\"seq\":0,\"sha256\":\"bc94be8d405bbe519e9d806b1ae895b0a07e95f57f2492d312175a588eaeab1c\",\"start_offset\":0},{\"bytes\":1234,\"epoch\":0,\"records\":3,\"seq\":1,\"sha256\":\"aeba0a6a51348457def7e70f1a6766d7b655d3e0461f98b7d09d47afd6f1cb82\",\"start_offset\":4194000}],\"content_sha256\":\"ae06338e9635e6940349cd3996467a103f166db6ee2005151a7512da8c9417c4\",\"grant_id\":\"mgr_00000000000000000000000000000000\",\"key\":\"v1/ws=ws_synthetic/m=machine-a/h=claude/d=2026/10/25/s=session-a/manifest.json\",\"org_id\":\"org_synthetic\",\"raw_bytes\":4195234,\"session\":{\"harness\":\"claude\",\"machine_id\":\"machine-a\",\"session_id\":\"session-a\",\"started_at\":\"2026-10-25T18:01:58.000Z\"},\"source_user_id\":\"user_synthetic_a\",\"state\":\"closed\",\"workspace_id\":\"ws_synthetic\"},{\"chunks\":[{\"bytes\":512,\"epoch\":0,\"records\":1,\"seq\":0,\"sha256\":\"5c294de0de9d05e67c33daec1a2d80576fe47253586e1641ddbf598083d4968e\",\"start_offset\":0}],\"content_sha256\":\"972b971dab6ee818f3a033fd9d039fb1d7c2fefcc1dc219c246ff8efe3ae86a0\",\"grant_id\":\"mgr_00000000000000000000000000000000\",\"key\":\"v1/ws=ws_synthetic/m=unknown-origin-42/h=codex/d=2026/01/02/s=019a1f3c-8e2b-7c41-9d3a-5b6f0e2a7c18/manifest.json\",\"org_id\":\"org_synthetic\",\"raw_bytes\":512,\"session\":{\"harness\":\"codex\",\"machine_id\":\"unknown-origin-42\",\"session_id\":\"019a1f3c-8e2b-7c41-9d3a-5b6f0e2a7c18\",\"started_at\":\"2026-01-02T00:00:00.000Z\"},\"source_user_id\":\"user_synthetic_b\",\"state\":\"open\",\"workspace_id\":\"ws_synthetic\"}],\"v\":1}",
+      "stored_plan_has_backfills_key": false,
+      "plan_digest": "a6682d4deeb479a42d8abf4c0dae89ddf39744916a0d4148bdb40ec702c20df1"
+    }
+  },
+  "v2_plan": {
+    "stored_plan_canonical_json": "{\"backfills\":[{\"backfill_sha256\":\"7c7eb4b4336d05e1fd4febc4af540d22c19eff61cdc56820135a1afa86689244\",\"chunks\":[{\"bytes\":2048,\"records\":12,\"sha256\":\"f78e66e4fcb09b034ef7d7f98c474f21e8fe469d38a736cd665a7d4f47652102\",\"start_offset\":0},{\"bytes\":777,\"records\":3,\"sha256\":\"263d23b70e8e76475ebc858f6f3cc2746562e4636d36f320aeccc1e6031d2efd\",\"start_offset\":2048}],\"format\":\"ndjson\",\"grant_id\":\"mgr_00000000000000000000000000000000\",\"key\":\"v1/ws=ws_synthetic/m=machine-live/h=claude/d=2026/10/30/s=session-straddle/manifest.json\",\"kind\":\"backfill\",\"org_id\":\"org_synthetic\",\"raw_bytes\":2825,\"session\":{\"harness\":\"claude\",\"machine_id\":\"machine-live\",\"session_id\":\"session-straddle\",\"started_at\":\"2026-10-30T08:00:00.000Z\"},\"source_user_id\":\"user_synthetic_a\",\"v\":2,\"workspace_id\":\"ws_synthetic\"}],\"exported_at\":\"2026-10-30T00:00:00.000Z\",\"grant_id\":\"mgr_00000000000000000000000000000000\",\"manifests\":[{\"chunks\":[{\"bytes\":4194000,\"epoch\":0,\"records\":900,\"seq\":0,\"sha256\":\"bc94be8d405bbe519e9d806b1ae895b0a07e95f57f2492d312175a588eaeab1c\",\"start_offset\":0},{\"bytes\":1234,\"epoch\":0,\"records\":3,\"seq\":1,\"sha256\":\"aeba0a6a51348457def7e70f1a6766d7b655d3e0461f98b7d09d47afd6f1cb82\",\"start_offset\":4194000}],\"content_sha256\":\"ae06338e9635e6940349cd3996467a103f166db6ee2005151a7512da8c9417c4\",\"grant_id\":\"mgr_00000000000000000000000000000000\",\"key\":\"v1/ws=ws_synthetic/m=machine-a/h=claude/d=2026/10/25/s=session-a/manifest.json\",\"org_id\":\"org_synthetic\",\"raw_bytes\":4195234,\"session\":{\"harness\":\"claude\",\"machine_id\":\"machine-a\",\"session_id\":\"session-a\",\"started_at\":\"2026-10-25T18:01:58.000Z\"},\"source_user_id\":\"user_synthetic_a\",\"state\":\"closed\",\"workspace_id\":\"ws_synthetic\"},{\"chunks\":[{\"bytes\":512,\"epoch\":0,\"records\":1,\"seq\":0,\"sha256\":\"5c294de0de9d05e67c33daec1a2d80576fe47253586e1641ddbf598083d4968e\",\"start_offset\":0}],\"content_sha256\":\"972b971dab6ee818f3a033fd9d039fb1d7c2fefcc1dc219c246ff8efe3ae86a0\",\"grant_id\":\"mgr_00000000000000000000000000000000\",\"key\":\"v1/ws=ws_synthetic/m=unknown-origin-42/h=codex/d=2026/01/02/s=019a1f3c-8e2b-7c41-9d3a-5b6f0e2a7c18/manifest.json\",\"org_id\":\"org_synthetic\",\"raw_bytes\":512,\"session\":{\"harness\":\"codex\",\"machine_id\":\"unknown-origin-42\",\"session_id\":\"019a1f3c-8e2b-7c41-9d3a-5b6f0e2a7c18\",\"started_at\":\"2026-01-02T00:00:00.000Z\"},\"source_user_id\":\"user_synthetic_b\",\"state\":\"open\",\"workspace_id\":\"ws_synthetic\"}],\"v\":2}",
+    "plan_digest": "f29e6cc4ec6c95c25ccd000a9c783de370f160a9387a0e3277ae2f8dd0407dbe"
+  },
+  "backfill_entry_input": {
+    "v": 2,
+    "kind": "backfill",
+    "key": "v1/ws=ws_synthetic/m=machine-live/h=claude/d=2026/10/30/s=session-straddle/manifest.json",
+    "org_id": "org_synthetic",
+    "workspace_id": "ws_synthetic",
+    "source_user_id": "user_synthetic_a",
+    "session": {
+      "machine_id": "machine-live",
+      "harness": "claude",
+      "session_id": "session-straddle",
+      "started_at": "2026-10-30T08:00:00.000Z"
+    },
+    "format": "ndjson",
+    "chunks": [
+      {
+        "start_offset": 0,
+        "bytes": 2048,
+        "sha256": "f78e66e4fcb09b034ef7d7f98c474f21e8fe469d38a736cd665a7d4f47652102",
+        "records": 12
+      },
+      {
+        "start_offset": 2048,
+        "bytes": 777,
+        "sha256": "263d23b70e8e76475ebc858f6f3cc2746562e4636d36f320aeccc1e6031d2efd",
+        "records": 3
+      }
+    ]
+  },
+  "backfill_entry_stored": {
+    "v": 2,
+    "kind": "backfill",
+    "grant_id": "mgr_00000000000000000000000000000000",
+    "key": "v1/ws=ws_synthetic/m=machine-live/h=claude/d=2026/10/30/s=session-straddle/manifest.json",
+    "org_id": "org_synthetic",
+    "workspace_id": "ws_synthetic",
+    "source_user_id": "user_synthetic_a",
+    "session": {
+      "machine_id": "machine-live",
+      "harness": "claude",
+      "session_id": "session-straddle",
+      "started_at": "2026-10-30T08:00:00.000Z"
+    },
+    "format": "ndjson",
+    "chunks": [
+      {
+        "start_offset": 0,
+        "bytes": 2048,
+        "sha256": "f78e66e4fcb09b034ef7d7f98c474f21e8fe469d38a736cd665a7d4f47652102",
+        "records": 12
+      },
+      {
+        "start_offset": 2048,
+        "bytes": 777,
+        "sha256": "263d23b70e8e76475ebc858f6f3cc2746562e4636d36f320aeccc1e6031d2efd",
+        "records": 3
+      }
+    ],
+    "backfill_sha256": "7c7eb4b4336d05e1fd4febc4af540d22c19eff61cdc56820135a1afa86689244",
+    "raw_bytes": 2825
+  },
+  "backfill_entry_sha256": "bf81f5b9de1f9e2d881d6c230828dacbd74e12eb0cc361589bab6498d3ed9c35",
+  "base": {
+    "revision": 7,
+    "version": "\"5f3c-live-v7\"",
+    "owner": "machine-live",
+    "writer": "machine-live",
+    "chunk_count": 4,
+    "epoch": 0,
+    "content_sha256": "0f0d280d26f82b57da5f44bac5284c5941b62479ad959a44dff869f24d3904e1"
+  },
+  "base_read_meta_read": {
+    "v": 2,
+    "kind": "backfill_base_read",
+    "grant_id": "mgr_00000000000000000000000000000000",
+    "plan_digest": "f29e6cc4ec6c95c25ccd000a9c783de370f160a9387a0e3277ae2f8dd0407dbe",
+    "key": "v1/ws=ws_synthetic/m=machine-live/h=claude/d=2026/10/30/s=session-straddle/manifest.json",
+    "org_id": "org_synthetic",
+    "workspace_id": "ws_synthetic",
+    "source_user_id": "user_synthetic_a",
+    "session": {
+      "machine_id": "machine-live",
+      "harness": "claude",
+      "session_id": "session-straddle",
+      "started_at": "2026-10-30T08:00:00.000Z"
+    },
+    "entry_sha256": "bf81f5b9de1f9e2d881d6c230828dacbd74e12eb0cc361589bab6498d3ed9c35"
+  },
+  "base_read_meta_read_canonical_json": "{\"entry_sha256\":\"bf81f5b9de1f9e2d881d6c230828dacbd74e12eb0cc361589bab6498d3ed9c35\",\"grant_id\":\"mgr_00000000000000000000000000000000\",\"key\":\"v1/ws=ws_synthetic/m=machine-live/h=claude/d=2026/10/30/s=session-straddle/manifest.json\",\"kind\":\"backfill_base_read\",\"org_id\":\"org_synthetic\",\"plan_digest\":\"f29e6cc4ec6c95c25ccd000a9c783de370f160a9387a0e3277ae2f8dd0407dbe\",\"session\":{\"harness\":\"claude\",\"machine_id\":\"machine-live\",\"session_id\":\"session-straddle\",\"started_at\":\"2026-10-30T08:00:00.000Z\"},\"source_user_id\":\"user_synthetic_a\",\"v\":2,\"workspace_id\":\"ws_synthetic\"}",
+  "commit_meta_upload": {
+    "v": 2,
+    "kind": "backfill",
+    "grant_id": "mgr_00000000000000000000000000000000",
+    "plan_digest": "f29e6cc4ec6c95c25ccd000a9c783de370f160a9387a0e3277ae2f8dd0407dbe",
+    "key": "v1/ws=ws_synthetic/m=machine-live/h=claude/d=2026/10/30/s=session-straddle/manifest.json",
+    "org_id": "org_synthetic",
+    "workspace_id": "ws_synthetic",
+    "source_user_id": "user_synthetic_a",
+    "session": {
+      "machine_id": "machine-live",
+      "harness": "claude",
+      "session_id": "session-straddle",
+      "started_at": "2026-10-30T08:00:00.000Z"
+    },
+    "backfill_sha256": "7c7eb4b4336d05e1fd4febc4af540d22c19eff61cdc56820135a1afa86689244",
+    "entry_sha256": "bf81f5b9de1f9e2d881d6c230828dacbd74e12eb0cc361589bab6498d3ed9c35",
+    "base": {
+      "revision": 7,
+      "version": "\"5f3c-live-v7\"",
+      "owner": "machine-live",
+      "writer": "machine-live",
+      "chunk_count": 4,
+      "epoch": 0,
+      "content_sha256": "0f0d280d26f82b57da5f44bac5284c5941b62479ad959a44dff869f24d3904e1"
+    }
+  }
+}

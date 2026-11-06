@@ -1,0 +1,23 @@
+-- Plan retract_delivery_projection's lookups for each call's own values.
+--
+-- project_delivery_activity_row calls this function for every delivered
+-- activity record. plpgsql caches its query plans per backend, and from the
+-- sixth call Postgres may switch a statement to a generic plan. For the first
+-- DELETE (a pre-0023 projection, looked up by the full primary key) the
+-- generic plan is costed below the primary key on the session timeline index
+-- (org_id, session_id, ts, event_id; CONCURRENT_INDEXES). With ts ahead of
+-- event_id, that probe walks the whole session in the index, once per record,
+-- while the batch holds the org and workspace delivery locks.
+--
+-- Production EXPLAIN (2026-10-26): custom plan convergence_events_pkey (cost
+-- 13.67), generic plan the timeline index (cost 8.96), so the generic plan wins.
+-- On a local PG17 copy with projection v2 active, one probe into an 81,000-row
+-- session read 759 buffers (9.9 ms) on the generic plan against 8 (0.05 ms) on
+-- the custom plan. 500-record batches into that session took 8.6-11.3 s, and
+-- 0.38-0.45 s with this setting.
+--
+-- No data, index, lock or function-body change. A later CREATE OR REPLACE of
+-- this function resets its configuration, so it must repeat this SET
+-- (test/retract-custom-plan.test.ts checks the migrated function).
+ALTER FUNCTION sessions.retract_delivery_projection(text, text, text, text, text, text, text)
+  SET plan_cache_mode = force_custom_plan;

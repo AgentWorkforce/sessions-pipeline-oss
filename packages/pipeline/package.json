@@ -1,0 +1,22 @@
+{
+  "name": "@96bulls/pipeline",
+  "version": "0.0.0",
+  "license": "Apache-2.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@relayhistory/object-store": "workspace:*"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "4.20260621.1",
+    "@electric-sql/pglite": "0.5.3",
+    "@types/node": "25.9.4",
+    "hono": "4.12.26",
+    "typescript": "5.9.3",
+    "vitest": "4.1.9"
+  }
+}

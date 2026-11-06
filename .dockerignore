@@ -1,0 +1,11 @@
+.git
+.gitmodules
+node_modules
+**/node_modules
+packages/object-store/dist
+vendor
+.alchemy
+.96bulls
+docs
+runbooks
+*.log

@@ -1,0 +1,9 @@
+The Agent Relay sessions pipeline
+Copyright 2025-2026 Agent Workforce Incorporated
+
+This product is licensed under the Apache License, Version 2.0 (see LICENSE).
+
+Third-party material in this repository:
+
+- certs/supabase-prod-ca-2021.crt is the public Supabase root CA certificate,
+  redistributed unmodified so the services can verify TLS to Supabase Postgres.

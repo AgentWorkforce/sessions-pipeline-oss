@@ -1,0 +1,55 @@
+# 96bulls local OpenTelemetry Collector. Receives OTLP from every service and
+# writes spans to a file the smoke test scans (no PII may appear) and to the
+# debug exporter. Hosted: swap exporters for CloudWatch/X-Ray; self-host: the
+# customer's OTLP backend. The redaction processor is the backstop behind the
+# allowlists in the services.
+receivers:
+  otlp:
+    protocols:
+      http:
+        endpoint: 0.0.0.0:4318
+      grpc:
+        endpoint: 0.0.0.0:4317
+processors:
+  batch:
+    timeout: 1s
+  attributes/drop_forbidden:
+    actions:
+      - key: prompt
+        action: delete
+      - key: summary
+        action: delete
+      - key: message
+        action: delete
+      - key: path
+        action: delete
+      - key: body
+        action: delete
+  redaction:
+    allow_all_keys: true
+    blocked_values:
+      - "AKIA[0-9A-Z]{16}"
+      - "ASIA[0-9A-Z]{16}"
+      - "sk-[A-Za-z0-9_-]{16,}"
+      - "xox[abpr]-[A-Za-z0-9-]{10,}"
+      - "-----BEGIN [A-Z ]*PRIVATE KEY-----"
+      - "eyJ[A-Za-z0-9_-]{10,}\\.[A-Za-z0-9_-]{10,}\\.[A-Za-z0-9_-]{10,}"
+      - "[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"
+    summary: info
+exporters:
+  file:
+    path: /telemetry/spans.jsonl
+    rotation:
+      max_megabytes: 50
+      max_backups: 2
+  debug:
+    verbosity: basic
+service:
+  telemetry:
+    logs:
+      level: warn
+  pipelines:
+    traces:
+      receivers: [otlp]
+      processors: [attributes/drop_forbidden, redaction, batch]
+      exporters: [file, debug]

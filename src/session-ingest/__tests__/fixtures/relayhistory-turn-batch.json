@@ -1,0 +1,70 @@
+{
+ "protocolVersion": 1,
+ "batch": {
+  "schema_version": 1,
+  "origin_id": "relayhistory:conversation_turns:v1",
+  "batch_id": "turns:fixture",
+  "job_id": "relayhistory-turns",
+  "generation": 1,
+  "destination_id": "relayhistory",
+  "instance_id": "relayhistory-api",
+  "account_id": "relayhistory:edce406526f3e8e2842f6051be0620c3466c3f4832a39f908689b85e6c06c3f0",
+  "mapping_version": "relayhistory-delivery-v1",
+  "records": [
+   {
+    "schema_version": 1,
+    "origin_id": "relayhistory:conversation_turns:v1",
+    "record_id": "turn:50e10b1e2d96145aaa8e3e88d2c82055b6a7b2b7a8da8d8772b777a57e974cec",
+    "revision_id": "turnrev:50e10b1e2d96145aaa8e3e88d2c82055:1793000000000001",
+    "revision": 1793000000000001,
+    "kind": "conversation_turn",
+    "source": "claude",
+    "session_id": "sess-fixture",
+    "operation": "upsert",
+    "payload": {
+     "id": "00000000-aaaa-4bbb-8ccc-dddddddddddd",
+     "org_id": "org-a",
+     "workspace_id": "ws-a",
+     "source": "claude",
+     "session_id": "sess-fixture",
+     "turn_index": 0,
+     "session_owner": "user-a",
+     "role": "user",
+     "content": "hello",
+     "actor_name": "Ada",
+     "actor_role": "owner",
+     "metadata_json": "{\"nativeCli\":\"claude\"}",
+     "ts": "2026-11-05T12:00:00.123Z",
+     "tagged": true
+    }
+   },
+   {
+    "schema_version": 1,
+    "origin_id": "relayhistory:conversation_turns:v1",
+    "record_id": "turn:0e7c19a00ecc7173fcd7f3a851ae053e3d4822d0611ee4c444aa8b2505bc9b78",
+    "revision_id": "turnrev:0e7c19a00ecc7173fcd7f3a851ae053e:1793000000000002",
+    "revision": 1793000000000002,
+    "kind": "conversation_turn",
+    "source": "claude",
+    "session_id": "sess-fixture",
+    "operation": "upsert",
+    "payload": {
+     "id": "00000001-aaaa-4bbb-8ccc-dddddddddddd",
+     "org_id": "org-a",
+     "workspace_id": "ws-a",
+     "source": "claude",
+     "session_id": "sess-fixture",
+     "turn_index": 1,
+     "session_owner": "user-a",
+     "role": "assistant",
+     "content": "hi",
+     "actor_name": "Ada",
+     "actor_role": "owner",
+     "metadata_json": "{}",
+     "ts": "2026-11-05T12:00:01.000Z",
+     "tagged": true
+    }
+   }
+  ]
+ }
+}

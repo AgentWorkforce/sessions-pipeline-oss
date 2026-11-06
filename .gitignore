@@ -1,0 +1,9 @@
+!.env.example
+*.log
+.96bulls/
+.alchemy/
+.env
+.env.*
+dist/
+node_modules/
+vendor/relayhistory/target/

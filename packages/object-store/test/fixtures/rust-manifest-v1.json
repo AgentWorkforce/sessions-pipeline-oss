@@ -1,0 +1,105 @@
+{
+  "_comment": "Produced by relayhistory main 54caea7c (Rust manifest::client helpers) for the cross-language check. Do not regenerate from TS.",
+  "key": "v1/ws=ws_1/m=mach-1/h=claude/d=2026/10/25/s=s-interop/manifest.json",
+  "manifest": {
+    "schema_v": 1,
+    "layout": "v1",
+    "trace_id": "019a1f3c-8e2b-7c41-9d3a-5b6f0e2a7c18",
+    "revision": 4,
+    "created_at": "2026-10-26T01:10:44.336Z",
+    "updated_at": "2026-10-26T01:10:44.336Z",
+    "session": {
+      "workspace_id": "ws_1",
+      "machine_id": "mach-1",
+      "harness": "claude",
+      "session_id": "s-interop",
+      "started_at": "2026-10-25T18:01:58.000Z"
+    },
+    "writer": {
+      "delivery_instance_id": "dest_1",
+      "plugin_version": "0.1.0"
+    },
+    "raw": {
+      "owner": "dest_1",
+      "state": "open",
+      "updated_at": "2026-10-26T01:10:44.336Z",
+      "format": "jsonl",
+      "compression": "zstd",
+      "chunk_count": 3,
+      "raw_bytes": 220,
+      "stored_bytes": 113,
+      "content_sha256": "2f99d12c09716e5f9198013ced2e0ba6392db02031520137ff5b6daf3c53fbb2",
+      "epoch": 1,
+      "epochs": [
+        {
+          "epoch": 0,
+          "opened_at": "2026-10-26T01:10:44.336Z",
+          "reason": "initial",
+          "first_seq": 0,
+          "opened_by": "dest_1"
+        },
+        {
+          "epoch": 1,
+          "opened_at": "2026-10-26T01:10:44.336Z",
+          "reason": "rewritten",
+          "first_seq": 2,
+          "opened_by": "dest_1"
+        }
+      ],
+      "next_offset": 70,
+      "chunks": [
+        {
+          "seq": 0,
+          "epoch": 0,
+          "start_offset": 0,
+          "bytes": 100,
+          "stored_bytes": 51,
+          "sha256": "122c597083bd438b7f6d72af75d025948899647711b806bdd2cd82fa69713db3",
+          "sha256_8": "122c5970",
+          "stored_sha256": "ec18eac8d758b1eba52d3c10d39adc6dd9806472cb4ae069635d383d9086a513",
+          "compression": "zstd",
+          "records": 3,
+          "first_ts": "2026-10-25T18:02:00.000Z"
+        },
+        {
+          "seq": 1,
+          "epoch": 0,
+          "start_offset": 100,
+          "bytes": 50,
+          "stored_bytes": 26,
+          "sha256": "d0f631ca1ddba8db3bcfcb9e057cdc98d0379f1bee00e75a545147a27dadd982",
+          "sha256_8": "d0f631ca",
+          "stored_sha256": "e8bc163c82eee18733288c7d4ac636db3a6deb013ef2d37b68322be20edc45cc",
+          "compression": "zstd",
+          "records": 3,
+          "first_ts": "2026-10-25T18:02:00.000Z"
+        },
+        {
+          "seq": 2,
+          "epoch": 1,
+          "start_offset": 0,
+          "bytes": 70,
+          "stored_bytes": 36,
+          "sha256": "9c0abe51c6e6655d81de2d044d4fb194931f058c0426c67c7285d8f5657ed64a",
+          "sha256_8": "9c0abe51",
+          "stored_sha256": "ad328846aa18b32a335816374511cac1063c704b8c57999e51da9f908290a7a4",
+          "compression": "zstd",
+          "records": 3,
+          "first_ts": "2026-10-25T18:02:00.000Z"
+        }
+      ]
+    },
+    "server": {
+      "updated_at": "2026-10-26T01:10:44.336Z",
+      "normalized": {
+        "version": 1,
+        "source_content_sha256": "2f99d12c09716e5f9198013ced2e0ba6392db02031520137ff5b6daf3c53fbb2",
+        "source_epoch": 1,
+        "built_at": "2026-10-26T01:10:44.336Z",
+        "manifest_key": "normalized/v1/manifest.json"
+      },
+      "lifecycle": "active",
+      "lifecycle_at": "2026-10-26T01:10:44.336Z"
+    }
+  }
+}

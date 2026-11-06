@@ -1,0 +1,72 @@
+name: ci
+on:
+  pull_request:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    # A real ClickHouse for the session read API's query tests
+    # (src/session-read-api/__tests__/page.clickhouse.test.ts), the version the
+    # search proofs pin. Test-only credentials; no production data.
+    services:
+      clickhouse:
+        image: clickhouse/clickhouse-server:26.8.34.13
+        env:
+          CLICKHOUSE_PASSWORD: ci-only
+          CLICKHOUSE_DEFAULT_ACCESS_MANAGEMENT: "1"
+        ports:
+          - 8123:8123
+        options: >-
+          --health-cmd "clickhouse-client --password ci-only -q 'SELECT 1'"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 12
+    env:
+      READ_API_TEST_CLICKHOUSE_URL: http://127.0.0.1:8123
+      READ_API_TEST_CLICKHOUSE_PASSWORD: ci-only
+    steps:
+      # Check out the literal PR head commit, not GitHub's synthetic merge ref, so a green
+      # run is evidence about the exact SHA under review.
+      - uses: actions/checkout@v4
+        with:
+          submodules: false
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - name: Record the commit under test
+        env:
+          EXPECTED: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          actual="$(git rev-parse HEAD)"
+          echo "commit under test: $actual (expected $EXPECTED)" | tee -a "$GITHUB_STEP_SUMMARY"
+          test "$actual" = "$EXPECTED"
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.4.2
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Install (root + workspaces)
+        run: bun install --frozen-lockfile
+      - name: Typecheck packages/pipeline
+        run: bun run --filter @96bulls/pipeline typecheck
+      - name: Test packages/pipeline (vitest, in-process PGlite; no real database)
+        run: bun run --filter @96bulls/pipeline test
+      - name: Build packages/object-store
+        run: bun run --filter @relayhistory/object-store build
+      - name: Test packages/object-store
+        run: bun run --filter @relayhistory/object-store test
+      - name: Typecheck portable source and packages
+        run: bun run typecheck
+      - name: Portable engine unit tests
+        run: bun test --timeout 30000
+      - name: Guard - no Helm hooks in any chart or manifest in this repo
+        run: |
+          # The annotation key is assembled so this file never matches its own guard; .github is excluded as well.
+          key="helm.sh/ho""ok"
+          ! grep -rn "$key" --include='*.yaml' --include='*.yml' --include='*.tpl' . --exclude-dir=node_modules --exclude-dir=vendor --exclude-dir=.github || (echo "helm hooks are not allowed (Alchemy renders --no-hooks)"; exit 1)
+      - name: Guard - nothing secret-like committed
+        run: |
+          ! git ls-files | grep -E '(^|/)(\.env|inputs\.json|.*\.pem)$' || (echo "secret-like file tracked"; exit 1)

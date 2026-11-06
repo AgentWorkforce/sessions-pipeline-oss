@@ -1,0 +1,77 @@
+[
+  {
+    "name": "session_catalog_agents_lookup_idx",
+    "definition": "ON sessions.session_catalog_agents (org_id, workspace_id, agent_name_normalized text_pattern_ops, last_ts DESC, session_id DESC, source DESC) WHERE agent_name_normalized IS NOT NULL AND last_ts IS NOT NULL",
+    "extension": null
+  },
+  {
+    "name": "convergence_events_task_title_direct_trgm_idx",
+    "definition": "ON sessions.convergence_events USING gin (task_title public.gin_trgm_ops) WITH (fastupdate = off) WHERE task_title IS NOT NULL",
+    "extension": "pg_trgm"
+  },
+  {
+    "name": "convergence_events_content_prefix_trgm_idx",
+    "definition": "ON sessions.convergence_events USING gin (left(content, 4096) public.gin_trgm_ops) WITH (fastupdate = off)",
+    "extension": "pg_trgm"
+  },
+  {
+    "name": "session_markers_timing_lookup_idx",
+    "definition": "ON sessions.session_markers (org_id, source, session_id)",
+    "extension": null
+  },
+  {
+    "name": "convergence_events_org_session_ts_idx",
+    "definition": "ON sessions.convergence_events (org_id, session_id, ts, event_id)",
+    "extension": null
+  },
+  {
+    "name": "convergence_events_org_session_workspace_idx",
+    "definition": "ON sessions.convergence_events (org_id, session_id, workspace_id)",
+    "extension": null
+  },
+  {
+    "name": "convergence_events_session_tool_calls_idx",
+    "definition": "ON sessions.convergence_events (org_id, session_id) WHERE kind = 'tool_call' AND delivery_record_id IS NOT NULL",
+    "extension": null
+  },
+  {
+    "name": "convergence_events_opening_prompt_idx",
+    "definition": "ON sessions.convergence_events (org_id, session_id, source, workspace_id, ts, event_id) WHERE (kind IN ('history', 'prompt', 'user') OR (kind = 'session_event' AND actor_role = 'user')) AND length(trim(coalesce(content, ''))) > 0",
+    "extension": null
+  },
+  {
+    "name": "session_brief_search_title_trgm_idx",
+    "definition": "ON sessions.session_brief_search USING gin (title public.gin_trgm_ops) WITH (fastupdate = off)",
+    "extension": "pg_trgm"
+  },
+  {
+    "name": "session_brief_search_description_trgm_idx",
+    "definition": "ON sessions.session_brief_search USING gin (description public.gin_trgm_ops) WITH (fastupdate = off)",
+    "extension": "pg_trgm"
+  },
+  {
+    "name": "convergence_events_legacy_delivery_idx",
+    "definition": "ON sessions.convergence_events (org_id, session_id, event_id) WHERE delivery_record_id IS NULL AND machine_id LIKE 'delivery:%'",
+    "extension": null
+  },
+  {
+    "name": "session_event_outbox_unsent_idx",
+    "definition": "ON sessions.session_event_outbox (available_at, created_at, id) WHERE quarantined_at IS NULL AND sent_at IS NULL",
+    "extension": null
+  },
+  {
+    "name": "session_event_outbox_inflight_idx",
+    "definition": "ON sessions.session_event_outbox (next_send_at, id) WHERE quarantined_at IS NULL AND sent_at IS NOT NULL",
+    "extension": null
+  },
+  {
+    "name": "session_revision_events_unsent_idx",
+    "definition": "ON sessions.session_revision_events (available_at, id) WHERE acknowledged_at IS NULL AND sent_at IS NULL",
+    "extension": null
+  },
+  {
+    "name": "session_revision_events_sent_idx",
+    "definition": "ON sessions.session_revision_events (sent_at, id) WHERE acknowledged_at IS NULL AND sent_at IS NOT NULL",
+    "extension": null
+  }
+]

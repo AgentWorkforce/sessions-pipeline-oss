@@ -1,0 +1,54 @@
+{
+  "name": "sessions-pipeline",
+  "version": "0.1.0",
+  "private": true,
+  "license": "Apache-2.0",
+  "type": "module",
+  "description": "Portable services, contracts and storage adapters for Agent Relay session history.",
+  "workspaces": [
+    "packages/pipeline",
+    "packages/object-store"
+  ],
+  "engines": {
+    "bun": ">=1.4.0",
+    "node": ">=24.11.1"
+  },
+  "scripts": {
+    "build": "bun run --filter @relayhistory/object-store build",
+    "typecheck": "tsc --noEmit && bun run --filter @96bulls/pipeline typecheck && bun run --filter @relayhistory/object-store typecheck",
+    "test": "bun test --timeout 30000 && bun run --filter @96bulls/pipeline test && bun run --filter @relayhistory/object-store test",
+    "audit:search-indexes": "bun run src/hoopdb/search-index-audit.ts",
+    "benchmark:relayhistory": "bun run src/migration/relayhistory-benchmark.ts",
+    "benchmark:relayhistory-api": "bun run src/migration/relayhistory-api-benchmark.ts",
+    "migration:copy": "bun run src/migration/relayhistory-copy.ts",
+    "migration:neon-fence": "bun run src/migration/relayhistory-neon-fence.ts",
+    "migration:rebuild": "bun run src/migration/relayhistory-rebuild.ts",
+    "migration:reproject": "bun run src/migration/relayhistory-reproject.ts",
+    "migration:reverse": "bun run src/migration/relayhistory-reverse.ts",
+    "migration:sequence-fence": "bun run src/migration/relayhistory-sequence-fence.ts",
+    "migration:verify": "bun run src/migration/relayhistory-verify.ts",
+    "migration:neon-s3-sync": "bun run src/migration/neon-s3-sync/main.ts",
+    "migration:neon-s3-erasure": "bun run src/migration/neon-s3-erasure/main.ts"
+  },
+  "dependencies": {
+    "@96bulls/pipeline": "workspace:*",
+    "@opentelemetry/api": "1.10.0",
+    "@opentelemetry/core": "3.0.0",
+    "@opentelemetry/exporter-trace-otlp-http": "0.300.0",
+    "@opentelemetry/resources": "3.0.0",
+    "@opentelemetry/sdk-trace-base": "2.12.0",
+    "@relayhistory/object-store": "workspace:*",
+    "hono": "4.12.26",
+    "pg": "8.23.1"
+  },
+  "devDependencies": {
+    "@electric-sql/pglite": "0.5.3",
+    "@types/bun": "latest",
+    "@types/node": "24",
+    "@types/pg": "8.15.5",
+    "typescript": "5.9.3",
+    "alchemy": "2.0.0-beta.84",
+    "effect": "4.0.7",
+    "fzstd": "0.1.1"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "repository": "AgentWorkforce/relayhistory-cloud",
+  "path": "packages/relayhistory/src/lib",
+  "commit": "2b0aea25b8a012b1bfba13993882abe836a5a67a",
+  "note": "The delivery protocol (POST /v1/delivery/batches) is owned by relayhistory-cloud; the session ingest must parse, digest and receipt a batch byte for byte as it does, so a client can switch base URL. delivery-contracts.ts and session-image.ts are verbatim; prepare.ts holds verbatim line ranges of delivery.ts (its Neon half excluded) under a local header. Never edit the copied lines here. Re-sync: bun scripts/vendor-relayhistory-delivery.ts <relayhistory-cloud checkout> <commit>, then review the diff.",
+  "files": {
+    "delivery-contracts.ts": "b507ad382feacb29562719845baa6373cea2e08fe37b7f85f5ac7105f8fb2115",
+    "session-image.ts": "8397cb9e76e138c3d028d57033e910a58dce08b688d3f15a7621d92061cd7e02"
+  },
+  "extracted": {
+    "prepare.ts": {
+      "from": "delivery.ts",
+      "from_sha256": "dd820ccc4f480e0b4d68608fc0ca57f6e783ce62866b638bca8c61be3c2bc387",
+      "ranges": {
+        "37-538": "5bcf6cf8faf50b7ea2bef92f2295173a6acc739af88fe5a22436dde4dcecf829",
+        "700-731": "45a13e8f784fcf195cfb36c0dfb824858f639b248dfaecfd99a2d52355d34256",
+        "740-794": "d0122487d245ace12a630f402784e7f2da262b995aa110b9558a7bf392176d1c"
+      }
+    }
+  }
+}

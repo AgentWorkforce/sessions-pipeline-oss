@@ -1,0 +1,39 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "lib": [
+      "ES2022"
+    ],
+    "strict": true,
+    "noEmit": true,
+    "skipLibCheck": true,
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "types": [
+      "node"
+    ],
+    "paths": {
+      "@rhc/*": [
+        "./packages/pipeline/src/*"
+      ],
+      "@rhc-object-store": [
+        "./packages/object-store/src/index.ts"
+      ]
+    },
+    "allowJs": true
+  },
+  "include": [
+    "src",
+    "scripts",
+    "stacks/aws/derived-schema-build.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "vendor",
+    "packages",
+    "**/__tests__/**"
+  ]
+}

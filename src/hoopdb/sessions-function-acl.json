@@ -1,0 +1,855 @@
+{
+  "comment": "Expected ACL of every sessions function after a clean migrate (src/hoopdb/migrate-guards.ts sessionsFunctionAcl). Regenerate only in a reviewed change; tests compare it exactly on PGlite and real PostgreSQL 15/17.",
+  "functions": {
+    "sessions.ack_session_brief_documents(uuid,jsonb)": [
+      "<owner>:EXECUTE",
+      "service_role:EXECUTE"
+    ],
+    "sessions.applied_repo_evidence(jsonb,jsonb)": [
+      "<owner>:EXECUTE",
+      "service_role:EXECUTE"
+    ],
+    "sessions.auth_session_resolve(text,timestamp with time zone,timestamp with time zone)": [
+      "<owner>:EXECUTE",
+      "service_role:EXECUTE"
+    ],
+    "sessions.auth_session_verify(text,timestamp with time zone)": [
+      "<owner>:EXECUTE",
+      "session_token_verifier:EXECUTE"
+    ],
+    "sessions.auth_sessions_mirror(jsonb)": [
+      "<owner>:EXECUTE",
+      "service_role:EXECUTE"
+    ],
+    "sessions.backfill_session_brief_documents(integer)": [
+      "<owner>:EXECUTE",
+      "service_role:EXECUTE"
+    ],
+    "sessions.canonical_feature_changed(jsonb,jsonb,jsonb,jsonb,jsonb)": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.canonical_feature_image_key(jsonb,text)": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.canonical_feature_journal_seed(bigint,text)": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.canonical_feature_page_ack_fence()": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.canonical_feature_pointer_set_valid(jsonb)": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.canonical_feature_source_valid(jsonb)": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.canonical_remote(text)": [
+      "<owner>:EXECUTE",
+      "service_role:EXECUTE"
+    ],
+    "sessions.capture_session_replay_pages(text,text,text,text)": [
+      "<owner>:EXECUTE",
+      "service_role:EXECUTE"
+    ],
+    "sessions.claim_session_analysis_cache()": [
+      "<owner>:EXECUTE",
+      "service_role:EXECUTE"
+    ],
+    "sessions.claim_session_brief_documents(uuid,integer)": [
+      "<owner>:EXECUTE",
+      "service_role:EXECUTE"
+    ],
+    "sessions.claim_session_large_read(uuid,integer)": [
+      "<owner>:EXECUTE",
+      "service_role:EXECUTE"
+    ],
+    "sessions.claimless_window_activations_append_only()": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.clean_root_commit(text)": [
+      "<owner>:EXECUTE",
+      "service_role:EXECUTE"
+    ],
+    "sessions.discover_session_large_reads()": [
+      "<owner>:EXECUTE",
+      "service_role:EXECUTE"
+    ],
+    "sessions.enqueue_session_analysis_cache(text,text,text,text)": [
+      "<owner>:EXECUTE",
+      "service_role:EXECUTE"
+    ],
+    "sessions.enqueue_session_large_read(text,text,text,text)": [
+      "<owner>:EXECUTE",
+      "service_role:EXECUTE"
+    ],
+    "sessions.finish_canonical_copy(bigint,jsonb,text,text,text,text)": [
+      "<owner>:EXECUTE",
+      "bulls96_canonical_feature_producer:EXECUTE"
+    ],
+    "sessions.finish_session_analysis_cache(text,text,text,text,bigint,text,uuid,text)": [
+      "<owner>:EXECUTE",
+      "service_role:EXECUTE"
+    ],
+    "sessions.heartbeat_session_analysis_cache(text,text,text,text,bigint,text,uuid)": [
+      "<owner>:EXECUTE",
+      "service_role:EXECUTE"
+    ],
+    "sessions.heartbeat_session_large_read(text,text,text,text,uuid)": [
+      "<owner>:EXECUTE",
+      "service_role:EXECUTE"
+    ],
+    "sessions.ingest_acquire_slot(jsonb)": [
+      "<owner>:EXECUTE",
+      "bulls96_session_ingest:EXECUTE"
+    ],
+    "sessions.ingest_apply_ordered_control(jsonb,text)": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.ingest_apply_reset(text,text,text,text)": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.ingest_apply_selection(text,text,text,text,jsonb,boolean)": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.ingest_attempt_epochs(text,text,text,text,text,text,text)": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.ingest_attempt_fenced(text,text,text,text,jsonb,jsonb)": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.ingest_batch_key(jsonb)": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.ingest_bounded(jsonb,integer,integer)": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.ingest_buffer_gc_claim(jsonb)": [
+      "<owner>:EXECUTE",
+      "bulls96_session_ingest:EXECUTE"
+    ],
+    "sessions.ingest_buffer_gc_finish(jsonb)": [
+      "<owner>:EXECUTE",
+      "bulls96_session_ingest:EXECUTE"
+    ],
+    "sessions.ingest_buffer_gc_groups(jsonb,jsonb)": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.ingest_buffer_gc_kept(uuid)": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.ingest_buffer_gc_locked(uuid,uuid)": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.ingest_buffer_gc_ordinals(uuid)": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.ingest_buffer_gc_prepare(jsonb)": [
+      "<owner>:EXECUTE",
+      "bulls96_session_ingest:EXECUTE"
+    ],
+    "sessions.ingest_buffer_gc_swap(jsonb)": [
+      "<owner>:EXECUTE",
+      "bulls96_session_ingest:EXECUTE"
+    ],
+    "sessions.ingest_claim_batch(jsonb)": [
+      "<owner>:EXECUTE",
+      "bulls96_session_ingest:EXECUTE"
+    ],
+    "sessions.ingest_claim_batch_mode(jsonb,text)": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.ingest_claim_buffered_batch(jsonb)": [
+      "<owner>:EXECUTE",
+      "bulls96_session_ingest:EXECUTE"
+    ],
+    "sessions.ingest_commit_batch(jsonb)": [
+      "<owner>:EXECUTE",
+      "bulls96_session_ingest:EXECUTE"
+    ],
+    "sessions.ingest_commit_buffered_batch(jsonb)": [
+      "<owner>:EXECUTE",
+      "bulls96_session_ingest:EXECUTE"
+    ],
+    "sessions.ingest_commit_revisions(jsonb)": [
+      "<owner>:EXECUTE",
+      "bulls96_session_ingest:EXECUTE"
+    ],
+    "sessions.ingest_custody_begin(jsonb)": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.ingest_custody_complete(jsonb)": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.ingest_custody_page(jsonb)": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.ingest_custody_release(jsonb)": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.ingest_digest(jsonb)": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.ingest_exact_keys(jsonb,text[])": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.ingest_fanout_fence(jsonb)": [
+      "<owner>:EXECUTE",
+      "bulls96_session_ingest:EXECUTE"
+    ],
+    "sessions.ingest_fence_pairs(jsonb)": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.ingest_frozen_source_policy()": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.ingest_frozen_source_privacy(text,text,text)": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.ingest_frozen_source_receipt(jsonb)": [
+      "<owner>:EXECUTE",
+      "bulls96_session_ingest:EXECUTE"
+    ],
+    "sessions.ingest_frozen_source_witness(jsonb)": [
+      "<owner>:EXECUTE",
+      "bulls96_session_ingest:EXECUTE"
+    ],
+    "sessions.ingest_history_active()": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.ingest_history_control_changed()": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.ingest_history_directory_state()": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.ingest_history_enqueue_graph(text,text,text,text,text)": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.ingest_history_fence_builds(uuid[])": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.ingest_history_invalidate_installed()": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.ingest_history_invalidate_scope(text,text,text,text)": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.ingest_history_inventory_claim(jsonb)": [
+      "<owner>:EXECUTE",
+      "bulls96_session_ingest:EXECUTE"
+    ],
+    "sessions.ingest_history_inventory_finish(jsonb)": [
+      "<owner>:EXECUTE",
+      "bulls96_session_ingest:EXECUTE"
+    ],
+    "sessions.ingest_history_inventory_heartbeat(jsonb)": [
+      "<owner>:EXECUTE",
+      "bulls96_session_ingest:EXECUTE"
+    ],
+    "sessions.ingest_history_inventory_locked(jsonb)": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.ingest_history_inventory_page(jsonb)": [
+      "<owner>:EXECUTE",
+      "bulls96_session_ingest:EXECUTE"
+    ],
+    "sessions.ingest_history_inventory_refs(jsonb)": [
+      "<owner>:EXECUTE",
+      "bulls96_session_ingest:EXECUTE"
+    ],
+    "sessions.ingest_history_live()": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.ingest_history_mask_get(jsonb)": [
+      "<owner>:EXECUTE",
+      "bulls96_session_ingest:EXECUTE"
+    ],
+    "sessions.ingest_history_mask_register(jsonb)": [
+      "<owner>:EXECUTE",
+      "bulls96_session_ingest:EXECUTE"
+    ],
+    "sessions.ingest_history_mask_rows(text,bigint,integer)": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.ingest_history_native_changed()": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.ingest_history_native_snapshot(uuid)": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.ingest_history_plan_carriers_page(jsonb)": [
+      "<owner>:EXECUTE",
+      "bulls96_session_ingest:EXECUTE"
+    ],
+    "sessions.ingest_history_plan_claim(jsonb)": [
+      "<owner>:EXECUTE",
+      "bulls96_session_ingest:EXECUTE"
+    ],
+    "sessions.ingest_history_plan_heartbeat(jsonb)": [
+      "<owner>:EXECUTE",
+      "bulls96_session_ingest:EXECUTE"
+    ],
+    "sessions.ingest_history_plan_locked(uuid,uuid,text)": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.ingest_history_plan_refs_page(jsonb)": [
+      "<owner>:EXECUTE",
+      "bulls96_session_ingest:EXECUTE"
+    ],
+    "sessions.ingest_history_pointer(sessions.session_index)": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.ingest_history_pointer_ref_backfill(jsonb,integer)": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.ingest_history_reconcile_backfill(text,integer)": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.ingest_history_require_model_permit(jsonb)": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.ingest_history_root(text)": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.ingest_history_scope_begin(jsonb)": [
+      "<owner>:EXECUTE",
+      "bulls96_session_ingest:EXECUTE"
+    ],
+    "sessions.ingest_history_scope_build_keys(jsonb)": [
+      "<owner>:EXECUTE",
+      "bulls96_session_ingest:EXECUTE"
+    ],
+    "sessions.ingest_history_scope_build_locked(jsonb,text)": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.ingest_history_scope_capture(jsonb)": [
+      "<owner>:EXECUTE",
+      "bulls96_session_ingest:EXECUTE"
+    ],
+    "sessions.ingest_history_scope_install(jsonb)": [
+      "<owner>:EXECUTE",
+      "bulls96_session_ingest:EXECUTE"
+    ],
+    "sessions.ingest_history_scope_managed(text,text,text,text)": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.ingest_history_scope_pointer_page(uuid,integer,integer)": [
+      "<owner>:EXECUTE",
+      "bulls96_canonical_feature_producer:EXECUTE"
+    ],
+    "sessions.ingest_history_scope_required(text,text,text,text)": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.ingest_history_scope_version_frozen()": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.ingest_history_set_live(boolean)": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.ingest_history_set_pointer_tracking(boolean)": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.ingest_history_source_current(jsonb,boolean)": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.ingest_history_sync_pointer()": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.ingest_history_tracking()": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.ingest_identifier(jsonb,boolean)": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.ingest_lazy_ack(jsonb,text)": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.ingest_lazy_ack_batch(jsonb)": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.ingest_lazy_attempt(uuid)": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.ingest_lazy_attempt_ack(uuid)": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.ingest_lazy_begin(jsonb,text)": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.ingest_lazy_clear(jsonb,text)": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.ingest_lazy_guard(text)": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.ingest_lazy_policy_set(jsonb)": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.ingest_lazy_records(jsonb)": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.ingest_lazy_stage_seats(uuid)": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.ingest_lazy_user(jsonb,text,jsonb)": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.ingest_lock_fences(text,text,text)": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.ingest_prepare_buffer_stage(jsonb)": [
+      "<owner>:EXECUTE",
+      "bulls96_session_ingest:EXECUTE"
+    ],
+    "sessions.ingest_publication_abandon(jsonb)": [
+      "<owner>:EXECUTE",
+      "bulls96_session_ingest:EXECUTE"
+    ],
+    "sessions.ingest_publication_candidates(jsonb)": [
+      "<owner>:EXECUTE",
+      "bulls96_session_ingest:EXECUTE"
+    ],
+    "sessions.ingest_publication_claim(jsonb)": [
+      "<owner>:EXECUTE",
+      "bulls96_session_ingest:EXECUTE"
+    ],
+    "sessions.ingest_publication_component(text)": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.ingest_publication_defer(jsonb)": [
+      "<owner>:EXECUTE",
+      "bulls96_session_ingest:EXECUTE"
+    ],
+    "sessions.ingest_publication_gc_claim(jsonb)": [
+      "<owner>:EXECUTE",
+      "bulls96_session_ingest:EXECUTE"
+    ],
+    "sessions.ingest_publication_gc_finish(jsonb)": [
+      "<owner>:EXECUTE",
+      "bulls96_session_ingest:EXECUTE"
+    ],
+    "sessions.ingest_publication_guard_pointer()": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.ingest_publication_heartbeat(jsonb)": [
+      "<owner>:EXECUTE",
+      "bulls96_session_ingest:EXECUTE"
+    ],
+    "sessions.ingest_publication_locked(uuid,uuid,text)": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.ingest_publication_prepare(jsonb)": [
+      "<owner>:EXECUTE",
+      "bulls96_session_ingest:EXECUTE"
+    ],
+    "sessions.ingest_publication_publish(jsonb)": [
+      "<owner>:EXECUTE",
+      "bulls96_session_ingest:EXECUTE"
+    ],
+    "sessions.ingest_publication_register_objects(jsonb)": [
+      "<owner>:EXECUTE",
+      "bulls96_session_ingest:EXECUTE"
+    ],
+    "sessions.ingest_publication_retire_fence()": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.ingest_publication_revision_snapshot(uuid)": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.ingest_publication_scope(jsonb,boolean)": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.ingest_receipt_seat_ack()": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.ingest_receipt_seat_initialize(jsonb)": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.ingest_receipt_seat_records(uuid,jsonb)": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.ingest_receipt_seats_for_stage(uuid)": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.ingest_records(jsonb)": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.ingest_release_slot(jsonb)": [
+      "<owner>:EXECUTE",
+      "bulls96_session_ingest:EXECUTE"
+    ],
+    "sessions.ingest_require_buffer_admission(text)": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.ingest_require_custody(text)": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.ingest_require_generation(text)": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.ingest_require_role(text)": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.ingest_reset_uploaded_sessions(jsonb)": [
+      "<owner>:EXECUTE",
+      "bulls96_session_ingest:EXECUTE"
+    ],
+    "sessions.ingest_revision(jsonb)": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.ingest_seed_close_baseline()": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.ingest_seed_fence_baseline(jsonb)": [
+      "<owner>:EXECUTE",
+      "bulls96_session_ingest_seeder:EXECUTE"
+    ],
+    "sessions.ingest_seed_fences(jsonb)": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.ingest_seed_proven_records(jsonb)": [
+      "<owner>:EXECUTE",
+      "bulls96_session_ingest_seeder:EXECUTE"
+    ],
+    "sessions.ingest_seed_records(jsonb)": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.ingest_seed_scope_capture(jsonb)": [
+      "<owner>:EXECUTE",
+      "bulls96_session_ingest_seeder:EXECUTE"
+    ],
+    "sessions.ingest_seed_scope_page(jsonb)": [
+      "<owner>:EXECUTE",
+      "bulls96_session_ingest_seeder:EXECUTE"
+    ],
+    "sessions.ingest_seed_scope_state(text,text,text,text)": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.ingest_seed_source_changed()": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.ingest_session_pairs(jsonb)": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.ingest_set_session_uploads(jsonb)": [
+      "<owner>:EXECUTE",
+      "bulls96_session_ingest:EXECUTE"
+    ],
+    "sessions.ingest_source_control_begin(jsonb)": [
+      "<owner>:EXECUTE",
+      "bulls96_session_ingest:EXECUTE"
+    ],
+    "sessions.ingest_source_control_complete(jsonb)": [
+      "<owner>:EXECUTE",
+      "bulls96_session_ingest:EXECUTE"
+    ],
+    "sessions.jwt_org_id()": [
+      "<owner>:EXECUTE",
+      "service_role:EXECUTE",
+      "authenticated:EXECUTE"
+    ],
+    "sessions.jwt_workspace_ids()": [
+      "<owner>:EXECUTE",
+      "service_role:EXECUTE",
+      "authenticated:EXECUTE"
+    ],
+    "sessions.legacy_remote(text)": [
+      "<owner>:EXECUTE",
+      "service_role:EXECUTE"
+    ],
+    "sessions.list_session_directory(text,text[],text[],text,text[],text,timestamp with time zone,timestamp with time zone,timestamp with time zone,timestamp with time zone,text[],text[],timestamp with time zone,text,text,integer)": [
+      "<owner>:EXECUTE",
+      "session_directory_search_worker:EXECUTE"
+    ],
+    "sessions.list_session_directory_events(text,text[],text[],text,text[],text,timestamp with time zone,timestamp with time zone,timestamp with time zone,timestamp with time zone,text[],text[],timestamp with time zone,text,text,integer,text)": [
+      "<owner>:EXECUTE",
+      "session_directory_search_worker:EXECUTE"
+    ],
+    "sessions.lock_repo_catalog(text)": [
+      "<owner>:EXECUTE",
+      "service_role:EXECUTE"
+    ],
+    "sessions.member_of(text,text[])": [
+      "<owner>:EXECUTE",
+      "service_role:EXECUTE",
+      "authenticated:EXECUTE"
+    ],
+    "sessions.migration_ingest_audit_append_only()": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.pipeline_dead_letters_observability()": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.pipeline_events_maintain(interval,integer)": [
+      "<owner>:EXECUTE",
+      "service_role:EXECUTE"
+    ],
+    "sessions.pipeline_jobs_observability()": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.publish_session_analysis_cache(text,text,text,text,bigint,text,timestamp with time zone,text,text,text,text,text,text,integer,uuid)": [
+      "<owner>:EXECUTE",
+      "service_role:EXECUTE"
+    ],
+    "sessions.publish_session_large_read(text,text,text,text,bigint,text,jsonb,text,text,text,text,text,integer,uuid)": [
+      "<owner>:EXECUTE",
+      "service_role:EXECUTE"
+    ],
+    "sessions.publish_session_replay_pages(text,text,text,text,bigint,text,jsonb,text,text,text,text,text,integer)": [
+      "<owner>:EXECUTE",
+      "service_role:EXECUTE"
+    ],
+    "sessions.queue_session_brief_document(jsonb)": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.repo_backfill_report()": [
+      "<owner>:EXECUTE",
+      "service_role:EXECUTE"
+    ],
+    "sessions.repo_backfill_step(integer,text)": [
+      "<owner>:EXECUTE",
+      "service_role:EXECUTE"
+    ],
+    "sessions.repo_group(text,uuid)": [
+      "<owner>:EXECUTE",
+      "service_role:EXECUTE",
+      "authenticated:EXECUTE"
+    ],
+    "sessions.repo_live(text,uuid)": [
+      "<owner>:EXECUTE",
+      "service_role:EXECUTE",
+      "authenticated:EXECUTE"
+    ],
+    "sessions.repo_visibility_ids(text,uuid)": [
+      "<owner>:EXECUTE",
+      "service_role:EXECUTE",
+      "authenticated:EXECUTE"
+    ],
+    "sessions.repos_maintain(integer)": [
+      "<owner>:EXECUTE",
+      "service_role:EXECUTE"
+    ],
+    "sessions.request_session_analysis_cache(text,text,text)": [
+      "<owner>:EXECUTE",
+      "session_directory_search_worker:EXECUTE"
+    ],
+    "sessions.resolve_repo(text,text,text,timestamp with time zone)": [
+      "<owner>:EXECUTE",
+      "service_role:EXECUTE"
+    ],
+    "sessions.retry_session_brief_documents(uuid,text)": [
+      "<owner>:EXECUTE",
+      "service_role:EXECUTE"
+    ],
+    "sessions.retry_session_large_read(text,text,text,text,uuid,text)": [
+      "<owner>:EXECUTE",
+      "service_role:EXECUTE"
+    ],
+    "sessions.route_session_large_read(text,text,text,text)": [
+      "<owner>:EXECUTE",
+      "service_role:EXECUTE"
+    ],
+    "sessions.search_session_directory(text,text,text,text,text,boolean,text,text,text,text,text,timestamp with time zone,timestamp with time zone,text,timestamp with time zone,text,text,text,integer)": [
+      "<owner>:EXECUTE",
+      "session_directory_search_worker:EXECUTE"
+    ],
+    "sessions.session_analysis_cache_demand(text,text,text,text,boolean)": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.session_brief(text,text,text)": [
+      "<owner>:EXECUTE",
+      "session_directory_search_worker:EXECUTE"
+    ],
+    "sessions.session_brief_document_authority(text,text[],text[])": [
+      "<owner>:EXECUTE",
+      "session_directory_search_worker:EXECUTE"
+    ],
+    "sessions.session_brief_document_changed()": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.session_brief_document_json(sessions.session_directory,boolean)": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.session_briefs_forget()": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.session_directory_activity(text,timestamp with time zone,timestamp with time zone)": [
+      "<owner>:EXECUTE",
+      "session_directory_search_worker:EXECUTE"
+    ],
+    "sessions.session_directory_analysis_cache(text,text,text)": [
+      "<owner>:EXECUTE",
+      "session_directory_search_worker:EXECUTE"
+    ],
+    "sessions.session_directory_companions_follow()": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.session_directory_desktop_catalog(text,text,text)": [
+      "<owner>:EXECUTE",
+      "session_directory_search_worker:EXECUTE"
+    ],
+    "sessions.session_directory_event_activity(text,timestamp with time zone,timestamp with time zone)": [
+      "<owner>:EXECUTE",
+      "session_directory_search_worker:EXECUTE"
+    ],
+    "sessions.session_directory_event_times_forget()": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.session_directory_events_changed()": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.session_directory_events_list_sql(integer,boolean,integer,boolean,boolean,boolean,boolean,boolean,boolean,boolean,boolean,boolean)": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.session_directory_events_require_ready(text)": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.session_directory_events_tombstone()": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.session_directory_forget_catalog()": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.session_directory_history_summary(text,text,text,text)": [
+      "<owner>:EXECUTE",
+      "session_directory_search_worker:EXECUTE"
+    ],
+    "sessions.session_directory_list_sql(integer,boolean,integer,boolean,boolean,boolean,boolean,boolean,boolean,boolean,boolean)": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.session_directory_pointers(text,text,text)": [
+      "<owner>:EXECUTE",
+      "session_directory_search_worker:EXECUTE"
+    ],
+    "sessions.session_directory_project_name()": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.session_directory_project_text(text,text,text)": [
+      "<owner>:EXECUTE",
+      "service_role:EXECUTE"
+    ],
+    "sessions.session_directory_readiness()": [
+      "<owner>:EXECUTE",
+      "session_directory_search_worker:EXECUTE"
+    ],
+    "sessions.session_directory_record_fences()": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.session_directory_replay_pages(text,text,text)": [
+      "<owner>:EXECUTE",
+      "session_directory_search_worker:EXECUTE"
+    ],
+    "sessions.session_directory_search_query(text)": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.session_directory_search_text(text,text,text,text,text,text,text,text)": [
+      "<owner>:EXECUTE",
+      "service_role:EXECUTE"
+    ],
+    "sessions.session_directory_tombstone_clears_catalog()": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.session_directory_tombstone_clears_summary()": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.session_directory_worker_scope(text)": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.session_history_capture(jsonb)": [
+      "<owner>:EXECUTE",
+      "bulls96_session_ingest:EXECUTE"
+    ],
+    "sessions.session_history_large_job(jsonb)": [
+      "<owner>:EXECUTE",
+      "bulls96_session_ingest:EXECUTE"
+    ],
+    "sessions.session_history_mask_page(jsonb)": [
+      "<owner>:EXECUTE",
+      "bulls96_session_ingest:EXECUTE"
+    ],
+    "sessions.session_history_register_artifact(jsonb)": [
+      "<owner>:EXECUTE",
+      "bulls96_session_ingest:EXECUTE"
+    ],
+    "sessions.session_history_register_object(jsonb)": [
+      "<owner>:EXECUTE",
+      "bulls96_session_ingest:EXECUTE"
+    ],
+    "sessions.session_history_replay_descriptor(jsonb)": [
+      "<owner>:EXECUTE",
+      "bulls96_session_ingest:EXECUTE"
+    ],
+    "sessions.session_history_replay_publish(jsonb)": [
+      "<owner>:EXECUTE",
+      "bulls96_session_ingest:EXECUTE"
+    ],
+    "sessions.session_history_source_lock(jsonb)": [
+      "<owner>:EXECUTE",
+      "bulls96_session_ingest:EXECUTE"
+    ],
+    "sessions.session_history_state_publish(jsonb)": [
+      "<owner>:EXECUTE",
+      "bulls96_session_ingest:EXECUTE"
+    ],
+    "sessions.session_history_summary_get(jsonb)": [
+      "<owner>:EXECUTE",
+      "bulls96_session_ingest:EXECUTE"
+    ],
+    "sessions.session_history_summary_publish(jsonb)": [
+      "<owner>:EXECUTE",
+      "bulls96_session_ingest:EXECUTE"
+    ],
+    "sessions.session_index_batch(jsonb)": [
+      "<owner>:EXECUTE",
+      "service_role:EXECUTE"
+    ],
+    "sessions.session_index_scrub_sticky()": [
+      "<owner>:EXECUTE",
+      "service_role:EXECUTE"
+    ],
+    "sessions.session_publication_is_managed(text,text,text,text,text)": [
+      "<owner>:EXECUTE",
+      "service_role:EXECUTE"
+    ],
+    "sessions.session_publication_lock(jsonb)": [
+      "<owner>:EXECUTE",
+      "service_role:EXECUTE"
+    ],
+    "sessions.session_publication_probe(jsonb)": [
+      "<owner>:EXECUTE",
+      "service_role:EXECUTE"
+    ],
+    "sessions.session_publication_register_object(jsonb)": [
+      "<owner>:EXECUTE",
+      "service_role:EXECUTE"
+    ],
+    "sessions.session_replay_directory_changed()": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.session_replay_source_snapshot(text,text,text,text)": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.session_replay_sources_changed()": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.set_session_brief_documents_live(boolean)": [
+      "<owner>:EXECUTE"
+    ],
+    "sessions.set_session_state(text,text,text,text,text,text,timestamp with time zone)": [
+      "<owner>:EXECUTE",
+      "service_role:EXECUTE"
+    ],
+    "sessions.set_session_state_for_publication(text,text,text,text,text,text,bigint,text,timestamp with time zone,text)": [
+      "<owner>:EXECUTE",
+      "service_role:EXECUTE"
+    ],
+    "sessions.upsert_machine(text,text,text,text,text,text,timestamp with time zone)": [
+      "<owner>:EXECUTE",
+      "service_role:EXECUTE"
+    ],
+    "sessions.upsert_session_index(jsonb)": [
+      "<owner>:EXECUTE",
+      "service_role:EXECUTE"
+    ]
+  }
+}

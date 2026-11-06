@@ -44,6 +44,9 @@ Telemetry has no default remote collector. PostHog log export requires both an e
 
 `docker/large-read-worker.Dockerfile` builds a separate, default-off Node worker. Shipping its source does not activate its runtime or schema profile.
 
+See the [signed image release procedure](docs/services-image-release.md) for
+operator-controlled publication and provenance verification.
+
 ## Contracts and limits
 
 - [Object-store adapters](packages/object-store/README.md) include filesystem, S3-compatible, GCS and Azure implementations. An adapter's existence does not establish a full installation on that provider.

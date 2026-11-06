@@ -32,7 +32,7 @@ import {
 
 const loc = {
   workspaceId: "ws_7f3a2c",
-  machineId: "mach-linuyc-desktop",
+  machineId: "machine-fixture-desktop",
   harness: "claude",
   startDate: "2026-10-25",
   sessionId: "4f1e9b2a-6c3d-4e8f-a1b2-c3d4e5f60718",
@@ -118,7 +118,7 @@ describe("manifest v1", () => {
     });
     const keys = chunkKeys(parsed).map((c) => c.key);
     expect(keys[1]).toBe(
-      `v1/ws=ws_7f3a2c/m=mach-linuyc-desktop/h=claude/d=2026/10/25/s=4f1e9b2a-6c3d-4e8f-a1b2-c3d4e5f60718/raw/0000000001-4194304-${m.raw.chunks[1]!.sha256_8}.jsonl.zst`,
+      `v1/ws=ws_7f3a2c/m=machine-fixture-desktop/h=claude/d=2026/10/25/s=4f1e9b2a-6c3d-4e8f-a1b2-c3d4e5f60718/raw/0000000001-4194304-${m.raw.chunks[1]!.sha256_8}.jsonl.zst`,
     );
   });
 

@@ -2,7 +2,7 @@ import { expect, it } from "bun:test";
 import { publishCanonicalProjectEvents } from "../publisher.ts";
 import { cloudProjectEventMessage, type ProjectEventClaim } from "../protocol.ts";
 import { canonicalProjectEventStore } from "../store.ts";
-const scope = { orgId: "c4fae7b9-43a9-44e8-94d5-455aa579d67b", workspaceId: "1220c1dc-0ce5-45fe-8b67-e7bb57a2db63" };
+const scope = { orgId: "10000000-0000-4000-8000-000000000001", workspaceId: "20000000-0000-4000-8000-000000000002" };
 const schemaGeneration = "a".repeat(64);
 const claim = (generation = "9007199254740993"): ProjectEventClaim => ({
   event: { eventId: "11111111-1111-1111-1111-111111111111", kind: "session.revised", generation,

@@ -21,8 +21,10 @@ on:
         required: true
 permissions:
   contents: read
+# run_id keeps each dispatch in its own group: a ref-keyed group would let
+# a later dispatch cancel one that is still waiting for approval.
 concurrency:
-  group: fast-path-${{ inputs.ref }}
+  group: fast-path-${{ inputs.ref }}-${{ github.run_id }}
   cancel-in-progress: false
 jobs:
   checks:
@@ -57,6 +59,8 @@ jobs:
       - uses: oven-sh/setup-bun@v2
         with:
           bun-version: 1.4.2
+          # Never save into a cache other workflows restore.
+          no-cache: true
       - uses: actions/setup-node@v4
         with:
           node-version: 24

@@ -1,0 +1,91 @@
+# Fast path: run this repository's CI checks on Blacksmith runners, outside
+# the shared GitHub-hosted queue. Anyone with write access (people or agents)
+# may start it; nothing runs until Khaliq approves the fast-path environment.
+#
+# It runs the same checks as ci.yml (typecheck, workspace builds and tests,
+# the portable engine tests against a disposable ClickHouse, and the
+# no-Helm-hooks / no-secret-files guards) on the exact resolved commit. This
+# repository has no publishing or deployment job, so neither does the fast
+# path: it publishes nothing and moves no tag.
+name: fast-path
+run-name: fast-path ${{ inputs.ref }} (${{ inputs.reason }})
+on:
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: Branch, tag or commit to check (a PR branch is fine)
+        required: true
+        default: main
+      reason:
+        description: Why this needs the fast path
+        required: true
+permissions:
+  contents: read
+concurrency:
+  group: fast-path-${{ inputs.ref }}
+  cancel-in-progress: false
+jobs:
+  checks:
+    environment: fast-path
+    runs-on: blacksmith-4vcpu-ubuntu-2404
+    timeout-minutes: 40
+    services:
+      clickhouse:
+        image: clickhouse/clickhouse-server:26.8.34.13
+        env:
+          CLICKHOUSE_PASSWORD: ci-only
+          CLICKHOUSE_DEFAULT_ACCESS_MANAGEMENT: "1"
+        ports:
+          - 8123:8123
+        options: >-
+          --health-cmd "clickhouse-client --password ci-only -q 'SELECT 1'"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 12
+    env:
+      READ_API_TEST_CLICKHOUSE_URL: http://127.0.0.1:8123
+      READ_API_TEST_CLICKHOUSE_PASSWORD: ci-only
+    outputs:
+      sha: ${{ steps.sha.outputs.sha }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: false
+          ref: ${{ inputs.ref }}
+      - id: sha
+        run: echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.4.2
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Install (root + workspaces)
+        run: bun install --frozen-lockfile
+      # The root scripts cover the same per-workspace steps as ci.yml.
+      - name: Build workspaces
+        run: bun run build
+      - name: Typecheck portable source and packages
+        run: bun run typecheck
+      - name: Tests (portable engine, then each workspace)
+        run: bun run test
+      - name: Guard - no Helm hooks in any chart or manifest in this repo
+        run: |
+          # The annotation key is assembled so this file never matches its own guard; .github is excluded as well.
+          key="helm.sh/ho""ok"
+          ! grep -rn "$key" --include='*.yaml' --include='*.yml' --include='*.tpl' . --exclude-dir=node_modules --exclude-dir=vendor --exclude-dir=.github || (echo "helm hooks are not allowed (Alchemy renders --no-hooks)"; exit 1)
+      - name: Guard - nothing secret-like committed
+        run: |
+          ! git ls-files | grep -E '(^|/)(\.env|inputs\.json|.*\.pem)$' || (echo "secret-like file tracked"; exit 1)
+      - name: Summary
+        env:
+          REF: ${{ inputs.ref }}
+          SHA: ${{ steps.sha.outputs.sha }}
+          REASON: ${{ inputs.reason }}
+        run: |
+          {
+            echo "### sessions-pipeline fast path"
+            echo "- ref: \`$REF\` at \`$SHA\`"
+            echo "- reason: $REASON"
+            echo "- checks: passed (nothing is published)"
+          } >> "$GITHUB_STEP_SUMMARY"

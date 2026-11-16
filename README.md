@@ -5,7 +5,7 @@
 
 # Agent Relay Sessions Pipeline
 
-Portable services for ingesting, scrubbing, storing, indexing and processing AI coding session history. Licensed under Apache-2.0.
+A superseded source export of the sessions pipeline. Follow the canonical engine repository for ongoing work; this export does not issue a supported image release.
 
 This source distribution contains the service runtime, Postgres migrations and role bootstrap SQL, pipeline contracts and worker runtime, and generic object-store adapters. Hosted account configuration, production operations records and deployment automation are maintained separately.
 
